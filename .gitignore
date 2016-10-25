@@ -1,0 +1,6 @@
+.settings/
+WebRoot/WEB-INF/classes/
+.classpath
+.mymetadata
+.project
+AmphenolExt.war

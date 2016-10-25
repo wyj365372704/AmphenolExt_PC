@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>易网通报关系统</title>
+
+<link href="../css/customsDeclaration.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="right_body">
+
+
+
+	<div class="path">您现在的位置： 首页 &gt; 报关系统 &gt; 辅助功能 &gt; 自定义要素 &gt; 新增自定义要素</div>
+		
+			<div class="public_div">
+				<h2>
+					<span class="fl">自定义要素</span>
+					<span class="fr"></span><!--  span里无内容时，此span不能删除  -->
+				</h2>
+				<div class="public_inner">
+				
+				<div class="top_button_div">
+					<input name="" type="button" class="save_button2"  />
+				</div>
+				
+				<table border="0" cellpadding="0" cellspacing="1" class="public_table">
+					  <tr>
+					    <td class="td_w_s text_r"><span class="text_r">申报单位：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+					    <td class="td_w_s text_r"> 商品编码：</td>
+					    <td><input type="text" name="textfield222" class="input_s_1" />
+                            <span class="red">*</span></td>
+				  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">商品名称：</td>
+					    <td><label></label>
+                            <input type="text" name="textfield22" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"> 单价：</td>
+                        <td><input type="text" name="textfield282" class="input_s_1" />
+                        <span class="red">*</span></td>
+				  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">总价：</td>
+					    <td><input type="text" name="textfield28" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">规格型号：</span></td>
+					    <td><input type="text" name="textfield283" class="input_s_1" />
+				        <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r"> 包装种类：</td>
+					    <td><select name="select" class="select_s_1">
+                          <option>---请选择---</option>
+                        </select>
+				        <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">原产国：</span></td>
+					    <td><input type="text" name="textfield284" class="input_s_1" />
+				        <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r"> 净重：</td>
+					    <td><input type="text" name="textfield286" class="input_s_1" />
+				        <span class="red">*</span></td>
+                        <td class="td_w_s text_r">毛重：</td>
+					    <td><label></label>
+				        <input type="text" name="textfield285" class="input_s_1" /></td>
+					  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">申报要素：</td>
+					    <td><label></label>
+					      <span class="v_t">
+					      <textarea name="textfield2" rows="6" class="textarea_s_3"></textarea>
+				        </span></td>
+                        <td colspan="2">&nbsp;</td>
+				      </tr>
+				  </table>
+			  </div>
+			</div>
+			  
+</body>
+</html>

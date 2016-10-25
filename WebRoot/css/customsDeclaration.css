@@ -1,0 +1,48 @@
+@import url("global.css");
+
+
+
+/*  所有按钮样式  */
+.add_commission,.edit_commission,.delete_commission,.importing_button,.transmitEntrust,.acceptedEntrust,.noEntrust,.declaresAuxiliary,.customsDeclaration,.export_button,
+.metastasis,.expense,.print_button,.add_button2,.delete_button2,.save_button2,.scan_button,.upload_button,.metastasis2,.move_button{background:url(../images/customs_button.png) no-repeat; border:none; cursor:pointer;}
+
+.add_commission{background-position:0 0px; width:59px; height:23px;}/*  新增  */
+.edit_commission{background-position:0 -23px; width:59px; height:23px;}/*  修改  */
+.delete_commission{background-position:0 -46px; width:59px; height:23px;}/*  删除  */
+.importing_button{background-position:0 -69px; width:67px; height:23px;}/*  导入  */
+.transmitEntrust{background-position:0 -92px; width:82px; height:23px;}/*  发送委托  */
+.acceptedEntrust{background-position:0 -115px; width:82px; height:23px;}/*  受理委托  */
+.noEntrust{background-position:0 -138px; width:82px; height:23px;}/*  拒绝委托  */
+.declaresAuxiliary{background-position:0 -161px; width:82px; height:23px;}/*  生产发票  */
+.customsDeclaration{background-position:0 -184px; width:94px; height:23px;}/*  生成付款单  */
+.metastasis{background-position:0 -207px; width:82px; height:23px;}/*  生产凭证  */
+.expense{background-position:0 -230px; width:59px; height:23px;}/*  费用  */
+.print_button{background-position:0 -253px; width:67px; height:23px;}/*  打印  */
+.add_button2{background-position:0 -276px; width:44px; height:20px;}/*  新增  */
+.delete_button2{background-position:0 -296px; width:44px; height:20px;}/*  删除  */
+.save_button2{background-position:0 -316px; width:59px; height:23px;}/*  保存  */
+.scan_button{background-position:0 -339px; width:44px; height:20px;}/*  浏览  */
+.upload_button{background-position:0 -359px; width:44px; height:20px;}/*  上传  */
+.metastasis2{background-position:0 -379px; width:44px; height:20px;}/*  转单  */
+.move_button{background-position:0 -399px; width:82px; height:23px;}/*  移动商品  */
+.export_button{background-position:0 -422px; width:59px; height:23px;}/*  导出  */
+
+.public_inner .top_button_div{margin:0px 0px 10px 0px;}
+.public_inner .top_button_div input{margin-bottom:0px 10px 0px 5px!important;}
+
+.textarea_s_3{ border:1px solid #b8d8e0; width:90%; height:80px; margin-left:3px;}
+.input_s_3{width:140px; border:1px solid #b8d8e0; height:18px; margin-left:3px;}
+
+.select_s_2,.input_w{margin-left:3px;}
+
+.text_info{margin:10px; line-height:20px; width:60%;}
+
+.verflow_s{overflow:auto; width:100%;}
+.verflow_s .list_table_s th,.verflow_s .list_table_s td{ word-wrap:normal; white-space:nowrap; *display:block; width:auto; padding:3px;}
+
+.public_inner .public_table td{ text-indent:3px;}
+
+.table_td_c td{text-align:center;}
+.table_td_c td input{text-align:center;}
+
+.td_bgcolor2{background-color:#F7F7F7!important;}

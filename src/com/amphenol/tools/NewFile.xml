@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<System-Link version='1.0' hostVersion='1.0'>
+	<LoginResponse actionSucceeded='true'>
+		<SessionHandle value='789a195b:1556c4bcf81:-7f32' />
+	</LoginResponse>
+	<Response sessionHandle='789a195b:1556c4bcf81:-7f32'
+		workHandle='789a195b:1556c4bcf81:-7f31'
+		systemTimestamp='2016-06-20 18:11:02.035' systemTimeZoneOffset='+8:00'
+		hasErrors='false' hasWarnings='false'>
+		<CreateResponse name='receiveScheduleReceipt'
+			requestedDomainClass='com.mapics.mm.ReceiveScheduledReceiptTxn'
+			actionSucceeded='true'>
+			<Key>
+				<Property path='scheduledReceiptToken'>
+					<Value><![CDATA[Z1844DD1W032372216120100640AAAC2]]></Value>
+				</Property>
+			</Key>
+		</CreateResponse>
+	</Response>
+	<Exception name='com.pjx.eScript.RequestFormatException'>
+		<Text><![CDATA[XML Parse Fatal Error]]></Text>
+		<Message type='error'>
+			<Text><![CDATA[org.xml.sax.SAXParseException: The markup in the document following the root element must be well-formed.]]></Text>
+		</Message>
+		<Message type='information'>
+			<Text><![CDATA[Contact system administration]]></Text>
+			<DetailedText><![CDATA[Check your XML against the DTD, then contact your system administrator]]></DetailedText>
+		</Message>
+	</Exception>
+</System-Link>

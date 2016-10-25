@@ -1,0 +1,75 @@
+
+<html >
+<style type="text/css">
+<!--
+body,html{height:100%;}<!--  这是针对整个背景自适应高度的样式，不能删  -->
+-->
+</style>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>易网通用户中心</title>
+<link href="../css/userCenter.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="center_body" onselectstart="return false">
+<table  height="100%" border="0" cellpadding="0" cellspacing="0"   id="main_scroll" style=" cursor:e-resize;">
+  <tr>
+   <td width="10" id="main_leftScroll_bg" onselectstart="return false" style="text-align:center;"  ><a  href="#" onClick="changeState();" class="scroll_table_opened" id="leftIcon"></a></td>
+  </tr>
+</table>
+</body>
+</html>
+<script language="JavaScript">
+
+
+document.onmouseup=function()
+{
+	try{
+		parent.dragFlag=false;
+		parent.exLeftFrame.document.getElementById("divFunctionTree").style.width=event.screenX -10;
+if(event.screenX -10<200){
+parent.exFra.cols="180,12,*"
+parent.exLeftFrame.document.getElementById("divFunctionTree").style.width=210;
+}
+}catch(e){}
+}
+document.onmousedown=function() 
+{
+if(document.getElementById("leftIcon").className == "scroll_table_opened"){
+parent.dragFlag=true;
+}else{
+parent.dragFlag=false;
+}
+}
+document.onmousemove = function()
+{
+    if ( parent.dragFlag==true){
+	
+		parent.exFra.cols = event.screenX -5 + ",12,*";
+	}
+}
+
+
+
+function changeState() { 
+
+if(document.getElementById("leftIcon").className == "scroll_table_opened"){
+tempNum=parent.exFra.cols;
+//tempNum2=parent.exLeftFrame.document.getElementById("main_leftTab").clientWidth;
+
+parent.exFra.cols = "0,11,*";
+
+document.getElementById("main_leftScroll_bg").style.borderLeft = "";
+document.getElementById("leftIcon").className = "scroll_table_closed";
+document.getElementById("main_scroll").style.cursor="default";
+}else{
+parent.exFra.cols = tempNum;
+//document.getElementById("leftIcon").src = "images/default/scroll_icon_opened.gif";
+document.getElementById("leftIcon").className = "scroll_table_opened";
+// parent.exLeftFrame.document.getElementById("main_leftTab").style.width=tempNum2;
+document.getElementById("main_leftScroll_bg").style.borderLeft = "0";
+document.getElementById("main_scroll").style.cursor="e-resize";
+}
+}
+
+</script>

@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>易网通报关系统</title>
+
+<link href="../css/customsDeclaration.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="right_body">
+
+
+
+	<div class="path">您现在的位置： 首页 &gt; 报关系统 &gt; 委托书管理 &gt; 新增委托书</div>
+		
+			<div class="public_div">
+				<h2>
+					<span class="fl">委托单信息</span>
+					<span class="fr"></span><!--  span里无内容时，此span不能删除  -->
+				</h2>
+				<div class="public_inner">
+				
+				<div class="top_button_div">
+					<input name="" type="button" class="save_button2"  />
+					<input name="" type="button" class="transmitEntrust" />
+					<input name="" type="button" class="acceptedEntrust"  />
+					<input name="" type="button" class="noEntrust"  />
+					<input name="" type="button" class="declaresAuxiliary" onclick='location="报关辅助.html"' />
+					<input name="" type="button" class="customsDeclaration" onclick='location="生成报关单（手动）.html"' />
+					<input name="" type="button" class="metastasis" onclick='location="同行转单.html"' />
+					<input name="" type="button" class="expense"  />
+				</div>
+				
+				<table border="0" cellpadding="0" cellspacing="1" class="public_table">
+					  <tr>
+					    <th colspan="4">委托书基本信息</th>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r"><span class="text_r">委托单号：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+					    <td class="td_w_s text_r"> 合同号：</td>
+					    <td><input type="text" name="textfield222" class="input_s_1" />
+                            <span class="red">*</span></td>
+				  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">委托单位：</td>
+					    <td><label></label>
+                            <input type="text" name="textfield22" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"> 到达日期：</td>
+                        <td><input type="text" name="textfield2" class="time_input2" />
+                            <span class="red">*</span></td>
+				  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">贸易性质：</td>
+					    <td><input type="text" name="textfield28" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">出货日期：</span></td>
+					    <td><input type="text" name="textfield3" class="time_input2" />
+                            <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r"> 运输方式：</td>
+					    <td><input type="text" name="textfield29" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">进出区：</span></td>
+					    <td><select name="select3" class="select_s_1">
+                          <option>---请选择---</option>
+                        </select>
+				        <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r"> 报关类型：</td>
+					    <td><select name="select6" class="select_s_1">
+                            <option>---请选择---</option>
+                          </select>
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r">报关方式：</td>
+					    <td><label></label>
+					      <select name="select5" class="select_s_1">
+                            <option>---请选择---</option>
+                          </select></td>
+					  </tr>
+					  <tr>
+					    <td class="td_w_s text_r">车牌：</td>
+					    <td><input type="text" name="textfield2" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">能否拼车：</span></td>
+					    <td><select name="select7" class="select_s_1">
+                          <option>---请选择---</option>
+                        </select>
+				        <span class="red">*</span></td>
+			      </tr>
+					  
+					  <tr>
+					    <td class="td_w_s text_r"> 司机电话：</td>
+					    <td><input type="text" name="textfield24" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">车型：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r">经营单位：</td>
+					    <td><label></label>
+                            <input type="text" name="textfield25" class="input_s_1" /></td>
+                        <td colspan="2">&nbsp;</td>
+				      </tr>
+					  <tr>
+					    <th colspan="4">收货人信息</th>
+			      </tr>
+					  <tr>
+                        <td class="td_w_s text_r"> 收货单位：</td>
+					    <td><input type="text" name="textfield2" class="input_s_1" />
+                            <span class="red">*</span></td>
+					    <td class="td_w_s text_r"><span class="text_r">收货人姓名：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+			      </tr>
+					  
+					  <tr>
+					    <td class="td_w_s text_r"> 收货人手机：</td>
+					    <td><input type="text" name="textfield23" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">收货人电话：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r v_t">收货人地址：</td>
+					    <td><textarea name="textarea" rows="6" class="textarea_s_3"></textarea>
+				        <span class="red">*</span></td>
+                        <td colspan="2">&nbsp;</td>
+				      </tr>
+					  <tr>
+                        <th colspan="4">申报单位信息</th>
+			      </tr>
+					  <tr>
+					    <td class="td_w_s text_r">报关行：</td>
+					    <td><label></label>
+                            <input type="text" name="textfield26" class="input_s_1" /></td>
+					    <td class="td_w_s text_r"> 委托日期：</td>
+					    <td><input type="text" name="textfield2" class="input_s_1" />
+                            <span class="red">*</span></td>
+				  </tr>
+					  <tr>
+					    <td class="td_w_s text_r"><span class="text_r">关务人员：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r">调度人员：</td>
+                        <td><input type="text" name="textfield2" class="input_s_1" />
+                            <span class="red">*</span></td>
+				  </tr>
+					  
+					  <tr>
+					    <td class="td_w_s text_r"> 商务人员：</td>
+					    <td><input type="text" name="textfield27" class="input_s_1" />
+                            <span class="red">*</span></td>
+                        <td class="td_w_s text_r"><span class="text_r">仓储人员：</span></td>
+					    <td><input type="text" name="textfield3" class="input_s_1" />
+                            <span class="red">*</span></td>
+			      </tr>
+					  <tr>
+                        <td class="td_w_s text_r v_t"> 备注：</td>
+					    <td class="v_t"><textarea name="textfield2" rows="6" class="textarea_s_3"></textarea>
+                            <span class="red">*</span></td>
+					    <td colspan="2"><table border="0" cellspacing="0" cellpadding="0" class="table_m_l td_padding2">
+                          <tr>
+                            <td><input name="Input33" type="checkbox" value="" /></td>
+                            <td>付汇</td>
+                          </tr>
+                          <tr>
+                            <td><input name="Input34" type="checkbox" value="" /></td>
+                            <td>结汇</td>
+                          </tr>
+                          <tr>
+                            <td><input name="Input35" type="checkbox" value="" /></td>
+                            <td>退税</td>
+                          </tr>
+
+                          <tr>
+                            <td><input name="Input38" type="checkbox" value="" /></td>
+                            <td>已录入费用</td>
+                          </tr>
+                        </table></td>
+			      </tr>
+				  </table>
+			  </div>
+			</div>
+			  
+			  <div class="data_list">
+				<h2>
+					<span class="fl">商品信息</span>
+					<span class="fr">		<input name="" type="button" class="add_button2"  />
+		<input name="" type="button" class="delete_button2"  /></span><!--  span里无内容时，此span不能删除  -->
+				</h2>
+				
+				<div class="list_inner">
+					<table width="100%" border="0" cellspacing="1" cellpadding="0" class="list_table_s">
+					  <tr>
+					    <th><input name="Input32" type="checkbox" value="" /></th>
+					    <th>商品编码</th>
+					    <th>商品名称</th>
+					    <th>规格型号</th>
+					    <th>品牌</th>
+					    <th>包装</th>
+					    <th>件数</th>
+					    <th>数量</th>
+					    <th>单位</th>
+					    <th>净重</th>
+					    <th>毛重</th>
+					    <th>单价</th>
+					    <th>总价</th>
+					    <th>币制</th>
+					    <th>原产男</th>
+					    <th>是否商检</th>
+					    <th>申报描述</th>
+					  </tr>
+					  <tr>
+					    <td><input name="Input3" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr class="td_bgcolor">
+					    <td><input name="Input4" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td><input name="Input5" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr class="td_bgcolor">
+					    <td><input name="Input6" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td><input name="Input7" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr class="td_bgcolor">
+					    <td><input name="Input8" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td><input name="Input9" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr class="td_bgcolor">
+					    <td><input name="Input10" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td><input name="Input11" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr class="td_bgcolor">
+					    <td><input name="Input12" type="checkbox" value="" /></td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					  </tr>
+				  </table>
+				</div>
+			</div>  
+			
+</body>
+</html>
