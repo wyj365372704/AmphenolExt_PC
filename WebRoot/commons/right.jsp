@@ -29,7 +29,7 @@ body,html{height:99%;}
 	<div class="path">您现在的位置： 首页 &gt;</div>
 	
 	<div class="welcome_info">
-		<h6>您好，欢迎登录Ampheno SRM系统！</h6>
+		<h6>您好，欢迎登录Amphenol SRM系统！</h6>
 		
 		
 	</div>
