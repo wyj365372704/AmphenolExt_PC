@@ -46,7 +46,7 @@
 				+ "."
 				+ ConstantUtils.ITNFROM
 				+ ") a ) temp ";
-		//sql0=sql0+" where temp.rowid >=0 and temp.rowid <= 10";
+		sql0=sql0+" where temp.rowid >=0 and temp.rowid <= 10";
 
 		stmt = (Statement) conn.createStatement();
 		stmt.execute(sql0);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
@@ -62,9 +62,9 @@
 			result = result + "<option value='" + str.trim() + "'>"
 					+ str.trim() + "</option>";
 					i++;
-					if(i>10){
-						break;
-					}
+					//if(i>10){
+					//	break;
+					//}
 		}
 		rs.close();
 		stmt.close();
@@ -200,6 +200,8 @@
  	function fordrjiChange(){
  		alert("test");
  	}
+ 	
+ 	    
  	function changeF() {
 	  //document.getElementById('txt').value = document.getElementById('sel').options[document.getElementById('sel').selectedIndex].value;
 	  var selVal=document.getElementById('sel').value;
@@ -211,6 +213,7 @@
              document.getElementsByName('fds40ji')[0].value=dataJson.ldesc;
              document.getElementsByName('fldesc')[0].value=dataJson.guige;
              document.getElementsByName('fumstt9')[0].value=dataJson.kcdw;
+             document.getElementsByName('fweight')[0].value=dataJson.weight;
              var blcft9 = dataJson.blcft9;
              if(blcft9 == 0){
              document.getElementsByName("fblcft9")[0].value="";
@@ -227,16 +230,20 @@
 	}
 	$(document).ready(function() {
 		$('select').selectseach();
-		// $('#sssss2').selectseach(); 
-		// $('#sssss').selectseach(); 
-		// $('#sssss1').selectseach(); 
-
-		/*  $('select').focus(
-		     function(){ 
-		     
-		     $('#msg').html($(this).text());
-		    }  );*/
+		//alert(document.getElementsByName("searcht")[0].value);onchange='getItems();'
+		
 	});
+	function getItems(){
+		//alert(document.getElementsByName("searcht")[0].value);
+		var itnot9=document.getElementsByName("searcht")[0].value;
+		$.ajax({url:"./test3.jsp?itnot9="+itnot9,async:false,  type: "GET" , 
+		success:function(data) {//这里的data是由请求页面返回的数据    
+                 //var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
+                 //$("#show").html("data=" + data + " name="+dataJson.name+"  age=" + dataJson.age);  
+                 //alert(data);   
+             document.getElementById('sel').innerHTML= data;       
+                 }});
+	}
 </script>
 
 <head>
@@ -266,7 +273,7 @@
 						<td align="right">物料：<font color="red">*</font></td>
 						<td>
 						<select id="sel" name="fordrji" m='search'
-							class='input_w' onchange="changeF();">
+							class='input_w' onchange="changeF();" >
 								<%=result%>
 						</select></td>
 						<td rowspan="11" width="55%">

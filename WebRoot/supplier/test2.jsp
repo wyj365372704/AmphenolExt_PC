@@ -24,6 +24,7 @@ Connection connXA = null;
 	String guige = "";
 	String kcdw = "";
 	String BLCFT9 ="1";
+	float weight = 0.0f;
 try{
 	java.sql.DriverManager.registerDriver (new com.ibm.as400.access.AS400JDBCDriver ()); 
 	Class.forName("com.ibm.as400.access.AS400JDBCDriver");	
@@ -66,6 +67,7 @@ try{
 		while(rs.next()){
 			//itrvt9 = rs.getString("ITRVT9");
 			ldesc=rs.getString("ITDSC");
+			weight = rs.getFloat("WEGHT");
 		}
 		//ldesc=ldesc+"123";
 	}
@@ -85,4 +87,4 @@ try{
 System.out.println("----->the blcft9 is "+BLCFT9.trim());
 }
 %>
-{"ldesc":"<%=ldesc.trim() %>","guige":"<%=guige.trim() %>","kcdw":"<%=kcdw.trim() %>","blcft9":"<%=BLCFT9.trim() %>"}
+{"ldesc":"<%=ldesc.trim() %>","guige":"<%=guige.trim() %>","kcdw":"<%=kcdw.trim() %>","blcft9":"<%=BLCFT9.trim() %>","weight":"<%=weight %>"}
