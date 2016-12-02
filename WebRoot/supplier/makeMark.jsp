@@ -51,6 +51,7 @@
 		stmt = (Statement) conn.createStatement();
 		stmt.execute(sql0);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 		rs = (ResultSet) stmt.getResultSet();
+		int i=0;
 		while (rs.next()) {
 			String str = "";
 			if ("ITMRVA".equalsIgnoreCase(ConstantUtils.ITNFROM)) {
@@ -60,6 +61,10 @@
 			}
 			result = result + "<option value='" + str.trim() + "'>"
 					+ str.trim() + "</option>";
+					i++;
+					if(i>10){
+						break;
+					}
 		}
 		rs.close();
 		stmt.close();
