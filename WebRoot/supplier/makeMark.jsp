@@ -68,7 +68,7 @@
 		}
 		rs.close();
 		stmt.close();
-		String sql3 = "select VN35 from " + envIdXA.trim() + ".VENNAM";
+		String sql3 = "select VN35 from " + envIdXA.trim() + ".VENNAM where vndnr='"+userCode+"'";
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(sql3);
 		if (rs != null) {
@@ -209,6 +209,7 @@
 	  htmlobj=$.ajax({url:"./test2.jsp?itnot9="+selVal,async:false, datatype: "json", type: "GET", contentType: "application/json"
 	  , success:function(data) {//这里的data是由请求页面返回的数据    
                  var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
+                 alert(dataJson);
                  //$("#show").html("data=" + data + " name="+dataJson.name+"  age=" + dataJson.age);     
              document.getElementsByName('fds40ji')[0].value=dataJson.ldesc;
              document.getElementsByName('fldesc')[0].value=dataJson.guige;
