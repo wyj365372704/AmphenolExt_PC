@@ -284,6 +284,7 @@ public class addShdServlet extends HttpServlet {
 		Statement stmt = null;
 		boolean result= false;
 		try {
+			userCode=userCode.trim();
 			SHPNO = userCode+"-"+dateFormat.format(new Date())+"-"+getSNO(conn);
 
 			if (conn != null) {
