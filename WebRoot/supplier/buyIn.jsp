@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ page import="com.amphenol.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
@@ -464,7 +464,7 @@ try{
 	<td><font color="red"><%=rs.getString("DS40JI")%></font></td>
 	<td><font color="red"><%=rs.getString("ORUMJI") %></font></td>
 	<td><font color="red"><%=rs.getString("UCOQJI") %></font></td>
-	<td><font color="red"><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></font></td>
+	<td><font color="red"><%=rs.getInt("UMCVJI")==0?0:(rs.getInt("QTYOJI")/rs.getInt("UMCVJI")) %></font></td>
 	<td><font color="red"><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </font></td>
 	<td><font color="red"><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></font></td>
 </tr>
@@ -474,14 +474,14 @@ try{
 <tr>
 	<td><input type="button" value="添加送货单" onclick="goshd('?item1=<%=rs.getString("ORDRJI") + "-"
 								+ rs.getInt("PISQJI") + "-"
-								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=rs.getString("DS40JI")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=rs.getInt("QTYOJI") / rs.getInt("UMCVJI")%>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
+								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=rs.getString("DS40JI")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=rs.getInt("UMCVJI")==0?0:(rs.getInt("QTYOJI") / rs.getInt("UMCVJI"))%>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
 	<td><%=rs.getString("WHIDJI") %></td>
 	<td><%=rs.getString("ORDRJI")+"-"+rs.getInt("PISQJI")+"-"+rs.getInt("BKSQJI") %></td>
 	<td><%=rs.getString("ITNOJI") %></td>
 	<td><%=rs.getString("DS40JI")%></td>
 	<td><%=rs.getString("ORUMJI") %></td>
 	<td><%=rs.getString("UCOQJI") %></td>
-	<td><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></td>
+	<td><%=rs.getInt("UMCVJI")==0?0:(rs.getInt("QTYOJI")/rs.getInt("UMCVJI")) %></td>
 	<td><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </td>
 	<td><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></td>
 </tr>
