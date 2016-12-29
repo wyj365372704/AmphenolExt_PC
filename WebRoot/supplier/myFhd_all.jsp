@@ -254,22 +254,27 @@
 	}
 	
 	function print(shpno,stat){
-window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='+stat,'newwindow','height=800,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno + '&stat=' + stat,'newwindow','height=800,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
 	}
-	function modifyInvoice(shpno,lgwno){
-		window.open('modifyInvoice.jsp?SHPNO='+shpno+'&LGWNO='+lgwno,'newwindow','height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+	function modifyInvoice(shpno, lgwno) {
+		window
+				.open(
+						'modifyInvoice.jsp?SHPNO=' + shpno + '&LGWNO=' + lgwno,
+						'newwindow',
+						'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
 	}
-		function gopage(shdState,shdNum,shdDate){
+	function gopage(shdState, shdNum, shdDate) {
 		var pageno = document.getElementById("gpageno").value;
-		window.location.href="myFhd_all.jsp?page="+pageno+"&shdState="+shdState+"&shdNum="+shdNum+"&shdDate="+shdDate;
-	
+		window.location.href = "myFhd_all.jsp?page=" + pageno + "&shdState="
+				+ shdState + "&shdNum=" + shdNum + "&shdDate=" + shdDate;
+
 	}
 </script>
 <%
- int currentPage = 1;//当前页码
-			  int pageSpace = 10 ;//每页显示条数
-			  int itemCount = 0 ;//总条数
-			  int pageCount = 0;
+	int currentPage = 1;//当前页码
+	int pageSpace = 10;//每页显示条数
+	int itemCount = 0;//总条数
+	int pageCount = 0;
 	String userName = (String) session.getAttribute("userName");
 	String envId = (String) session.getAttribute("envId");
 	String envIdXA = (String) session.getAttribute("envIdXA");
@@ -289,8 +294,8 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 			(request.getParameter("shdDate") == null ? "" : request
 					.getParameter("shdDate")).getBytes("ISO8859-1"),
 			"utf-8");
-		//	if(!shdDate.equals(""))
-		//	shdDate = String.valueOf(Integer.parseInt(shdDate)-Integer.valueOf(19000000));
+	//	if(!shdDate.equals(""))
+	//	shdDate = String.valueOf(Integer.parseInt(shdDate)-Integer.valueOf(19000000));
 	//new String((request.getParameter("fds40ji")==null?"":request.getParameter("fds40ji")).getBytes("ISO8859-1"),"utf-8");
 	if (userName == null || "".equals(userName.trim())) {
 %>
@@ -321,20 +326,21 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 
 			<ul>
 				<li><div class="w_s">送货单号码：</div> <input name=shdNum
-					type="text" class="input_w" value="<%=shdNum%>" />
-				</li>
-				<li><div class="w_s">送货单状态：</div> 
-						<select name="shdState" class="input_w" style="widows: 120px">
+					type="text" class="input_w" value="<%=shdNum%>" /></li>
+				<li><div class="w_s">送货单状态：</div> <select name="shdState"
+					class="input_w" style="widows: 120px">
 						<option value="" selected="selected">所有</option>
-						<option value="10" <%if(shdState.equals("10")){%>selected="selected"<%}%>>下达，未打印</option>
-						<option value="20" <%if(shdState.equals("20")){%>selected="selected"<%}%>>下达，已打印</option>
-						<option value="40" <%if(shdState.equals("40")){%>selected="selected"<%}%>>部分收货</option>
-						<option value="50" <%if(shdState.equals("50")){%>selected="selected"<%}%>>完成</option>
-						</select>
-				</li>
+						<option value="10" <%if (shdState.equals("10")) {%>
+							selected="selected" <%}%>>下达，未打印</option>
+						<option value="20" <%if (shdState.equals("20")) {%>
+							selected="selected" <%}%>>下达，已打印</option>
+						<option value="40" <%if (shdState.equals("40")) {%>
+							selected="selected" <%}%>>部分收货</option>
+						<option value="50" <%if (shdState.equals("50")) {%>
+							selected="selected" <%}%>>完成</option>
+				</select></li>
 				<li><div class="w_s">创建日期：</div> <input name=shdDate
-					type="text" class="input_w" value="<%=shdDate%>" />
-				</li>
+					type="text" class="input_w" value="<%=shdDate%>" /></li>
 			</ul>
 		</div>
 
@@ -374,50 +380,10 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 								conn = DriverManager.getConnection(url,
 										ConstantUtils.DATABASE_NAME,
 										ConstantUtils.DATABASE_PASSWORD);
-										
-										
-	//----------查询总条数
-	String sql = "select count(*) as c from " + envId.trim()
+
+								//----------查询总条数
+								String sql = "select count(*) as c from " + envId.trim()
 										+ ".ZSHPHDR where VNDNR = '" + userCode + "'";
-	if (!"".equals(shdNum)) {
-									sql = sql + " AND SHPNO like '%" + shdNum + "%'";
-								}
-								if (!"".equals(shdState)) {
-									sql = sql + " AND OSTAT = " + shdState;
-								}
-								if (!"".equals(shdDate)) {
-									sql = sql + " AND CRDT = " + String.valueOf(Integer.parseInt(shdDate)-Integer.valueOf(19000000)) ;
-								}
- 	System.out.println("the get count sql is "+sql);
-	stmt = conn.createStatement();
-	rs = stmt.executeQuery(sql) ;
-	System.out.println("execute finished");
-	if(rs.next()){
-		itemCount = rs.getInt("c");
-		System.out.println("the count is "+ itemCount);
-	}
-	if(rs !=null){
-	rs.close();
-	}
-	if(stmt!= null){
-	stmt.close();
-	}
-	//-----------维护pageCount
-	pageCount = itemCount%pageSpace == 0?itemCount/pageSpace:itemCount/pageSpace+1;
-	
-	//-----------维护currentPage
-		  try{
-			  	currentPage = Integer.parseInt(request.getParameter("page"));
-			  	if(currentPage<1)
-			  	currentPage = 1 ;
-			  	if(currentPage>pageCount)
-			  	currentPage = pageCount ;
-			  }catch(Exception e){
-			  	currentPage = 1 ;
-			  }
-			  
-							 sql = "select * from (select ZSHPHDR.*,rownumber() over() as rn from " + envId.trim()
-										+ ".ZSHPHDR as ZSHPHDR  where VNDNR = '" + userCode + "'";
 								if (!"".equals(shdNum)) {
 									sql = sql + " AND SHPNO like '%" + shdNum + "%'";
 								}
@@ -425,11 +391,62 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 									sql = sql + " AND OSTAT = " + shdState;
 								}
 								if (!"".equals(shdDate)) {
-									sql = sql + " AND CRDT = " + String.valueOf(Integer.parseInt(shdDate)-Integer.valueOf(19000000));
+									sql = sql
+											+ " AND CRDT = "
+											+ String.valueOf(Integer.parseInt(shdDate)
+													- Integer.valueOf(19000000));
 								}
-								sql+=" ) AS a1 WHERE a1.rn BETWEEN "+((currentPage-1)*pageSpace+1)+" AND "+(currentPage*pageSpace);
-								sql +=" order by SHPNO desc ";
-								System.out.println("the myfindall get sql is "+sql);
+								System.out.println("the get count sql is " + sql);
+								stmt = conn.createStatement();
+								rs = stmt.executeQuery(sql);
+								System.out.println("execute finished");
+								if (rs.next()) {
+									itemCount = rs.getInt("c");
+									System.out.println("the count is " + itemCount);
+								}
+								if (rs != null) {
+									rs.close();
+								}
+								if (stmt != null) {
+									stmt.close();
+								}
+								//-----------维护pageCount
+								pageCount = itemCount % pageSpace == 0 ? itemCount / pageSpace
+										: itemCount / pageSpace + 1;
+
+								//-----------维护currentPage
+								try {
+									currentPage = Integer
+											.parseInt(request.getParameter("page"));
+									if (currentPage < 1)
+										currentPage = 1;
+									if (currentPage > pageCount)
+										currentPage = pageCount;
+								} catch (Exception e) {
+									currentPage = 1;
+								}
+
+								sql = "select * from (select ZSHPHDR.*,rownumber() over() as rn from "
+										+ envId.trim()
+										+ ".ZSHPHDR as ZSHPHDR  where VNDNR = '"
+										+ userCode + "'";
+								if (!"".equals(shdNum)) {
+									sql = sql + " AND SHPNO like '%" + shdNum + "%'";
+								}
+								if (!"".equals(shdState)) {
+									sql = sql + " AND OSTAT = " + shdState;
+								}
+								if (!"".equals(shdDate)) {
+									sql = sql
+											+ " AND CRDT = "
+											+ String.valueOf(Integer.parseInt(shdDate)
+													- Integer.valueOf(19000000));
+								}
+								sql += " ) AS a1 WHERE a1.rn BETWEEN "
+										+ ((currentPage - 1) * pageSpace + 1) + " AND "
+										+ (currentPage * pageSpace);
+								sql += " order by SHPNO desc ";
+								System.out.println("the myfindall get sql is " + sql);
 								if (conn != null) {
 									//result="已经成功连接数据库";
 
@@ -443,13 +460,14 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 							<td><%=rs.getString("OSTAT").equals("10") ? "下达，未打印"
 								: rs.getString("OSTAT").equals("40") ? "部分收货"
 										: rs.getString("OSTAT").equals("20") ? "下达，已打印"
-										: "完成"%></td>
-							<td><%=(rs.getInt("CRDT") +Integer.valueOf(19000000))%></td>
+												: "完成"%></td>
+							<td><%=(rs.getInt("CRDT") + Integer
+								.valueOf(19000000))%></td>
 							<td><input type="button" value="打印"
 								onclick="print('<%=rs.getString("SHPNO")%>','<%=rs.getString("OSTAT")%>')" />
 								&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="修改发票号"
 								onclick="modifyInvoice('<%=rs.getString("SHPNO")%>','<%=rs.getString("LGWNO")%>')" />
-								</td>
+							</td>
 						</tr>
 						<%
 							}
@@ -480,13 +498,22 @@ window.open('<%=request.getContextPath()%>/getShdServlet?shpno='+ shpno+'&stat='
 
 					</table>
 				</div>
-							  <div class="page">共有&nbsp;<%=pageCount %>&nbsp;页&nbsp;&nbsp;<%=itemCount %>&nbsp;条记录，当前为第&nbsp;<%=currentPage %>&nbsp;页    
-							  <a href="myFhd_all.jsp?page=1&shdState=<%=shdState %>&shdNum=<%=shdNum %>&shdDate=<%=shdDate %>" title="" onclick="first();">首页</a> 
-							  <a href="myFhd_all.jsp?page=<%=currentPage-1>0?currentPage-1:1 %>&shdState=<%=shdState %>&shdNum=<%=shdNum %>&shdDate=<%=shdDate %>" title="" onclick="pre();">上一页</a> 
-							  <a href="myFhd_all.jsp?page=<%=currentPage+1>pageCount?pageCount:currentPage+1 %>&shdState=<%=shdState %>&shdNum=<%=shdNum %>&shdDate=<%=shdDate %>" title="" onclick="next();">下一页</a> 
-							  <a href="myFhd_all.jsp?page=<%=pageCount %>&shdState=<%=shdState %>&shdNum=<%=shdNum %>&shdDate=<%=shdDate %>" title="" onclick="last();">尾页</a> 每页<%=pageSpace %>条 到第<input type="text" class="page_input" id="gpageno" value="1" />页 <input type="button" value="" class="go_button" onclick="javascript:gopage('<%=shdState%>','<%=shdNum%>','<%=shdDate%>')"/>
+				<div class="page">
+					共有&nbsp;<%=pageCount%>&nbsp;页&nbsp;&nbsp;<%=itemCount%>&nbsp;条记录，当前为第&nbsp;<%=currentPage%>&nbsp;页
+					<a
+						href="myFhd_all.jsp?page=1&shdState=<%=shdState%>&shdNum=<%=shdNum%>&shdDate=<%=shdDate%>"
+						title="" onclick="first();">首页</a> <a
+						href="myFhd_all.jsp?page=<%=currentPage - 1 > 0 ? currentPage - 1 : 1%>&shdState=<%=shdState%>&shdNum=<%=shdNum%>&shdDate=<%=shdDate%>"
+						title="" onclick="pre();">上一页</a> <a
+						href="myFhd_all.jsp?page=<%=currentPage + 1 > pageCount ? pageCount : currentPage + 1%>&shdState=<%=shdState%>&shdNum=<%=shdNum%>&shdDate=<%=shdDate%>"
+						title="" onclick="next();">下一页</a> <a
+						href="myFhd_all.jsp?page=<%=pageCount%>&shdState=<%=shdState%>&shdNum=<%=shdNum%>&shdDate=<%=shdDate%>"
+						title="" onclick="last();">尾页</a> 每页<%=pageSpace%>条 到第<input
+						type="text" class="page_input" id="gpageno" value="1" />页 <input
+						type="button" value="" class="go_button"
+						onclick="javascript:gopage('<%=shdState%>','<%=shdNum%>','<%=shdDate%>')" />
 
-			</div>
+				</div>
 	</form>
 	</div>
 

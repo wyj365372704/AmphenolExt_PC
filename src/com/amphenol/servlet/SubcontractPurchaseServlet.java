@@ -36,8 +36,14 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 	String ordno = "";
 	String startDate = "";
 	String endDate = "";
-
+	int pageCount ;
+	int itemCount;
+	int currentPage;
+	
+	
 	List<Map> results;
+	
+	
 
 	Connection connXA = null ;
 	Connection conn = null ;
@@ -124,21 +130,23 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 		try {
 			statement = connXA.createStatement();
 			StringBuilder sqlBuilder = new StringBuilder();
-			sqlBuilder.append("SELECT ORDNO,HOUSE,CURID,BUYNO,PSTTS,ACTDT FROM ")
+			sqlBuilder.append("SELECT A.* FROM ")
 			.append(envIdXA.trim())
-			.append(".POMAST WHERE VNDNR = '")
+			.append(".POMAST A , ").
+			append(envIdXA.trim()).
+			append(".MOPORF B WHERE A.ORDNO = B.PONR AND A.ORDNO !='' AND A.VNDNR = '")
 			.append(userCode)
-			.append("' AND PSTTS != '99' ");
+			.append("' AND A.PSTTS != '99' ");
 			if(buyno!=null && !buyno.trim().isEmpty()){
-				sqlBuilder.append("AND BUYNO like '%").append(buyno.trim()).append("%' ");
+				sqlBuilder.append("AND A.BUYNO like '%").append(buyno.trim()).append("%' ");
 			}
 			if(startDate!=null && !startDate.trim().isEmpty()){
 				long t = Long.parseLong(startDate.substring(0,4)+startDate.substring(5,7)+startDate.substring(8,10))-19000000L;
-				sqlBuilder.append("AND ACTDT >= '").append(String.valueOf(t)).append("' ");
+				sqlBuilder.append("AND A.ACTDT >= '").append(String.valueOf(t)).append("' ");
 			}
 			if(endDate!=null && !endDate.trim().isEmpty()){
 				long t = Long.parseLong(endDate.substring(0,4)+endDate.substring(5,7)+endDate.substring(8,10))-19000000L;
-				sqlBuilder.append("AND ACTDT <= '").append(String.valueOf(t)).append("' ");
+				sqlBuilder.append("AND A.ACTDT <= '").append(String.valueOf(t)).append("' ");
 			}
 			if(ordno!=null && !ordno.trim().isEmpty()){
 				String temp="";
@@ -157,14 +165,14 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 					}
 				}
 				temp=temp.substring(0, temp.length()-1);
-				sqlBuilder.append("AND (ORDNO IN (").append(temp).append(")");
+				sqlBuilder.append("AND (A.ORDNO IN (").append(temp).append(")");
 				if(ordnos.length ==1){
-					sqlBuilder.append(" OR ORDNO LIKE '%").append(temp.substring(1,temp.length()-1)).append("%')");
+					sqlBuilder.append(" OR A.ORDNO LIKE '%").append(temp.substring(1,temp.length()-1)).append("%')");
 				}else{
 					sqlBuilder.append(")");
 				}
 			}
-			sqlBuilder.append(" ORDER BY ORDNO DESC");
+			sqlBuilder.append(" ORDER BY A.ORDNO DESC");
 //			String sql = "SELECT ORDNO,HOUSE,CURID,BUYNO,PSTTS,ACTDT FROM "+envIdXA.trim()+".POMAST WHERE VNDNR = '"+userCode+"' AND PSTTS != '99' "+"ORDER BY ORDNO DESC";
 			System.out.println("sql is "+sqlBuilder.toString());
 			executeQuery = statement.executeQuery(sqlBuilder.toString());
@@ -205,7 +213,7 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 			executeQuery = statement.executeQuery(sql);
 			if(executeQuery!=null){
 				if(executeQuery.next()){
-					result = executeQuery.getString("CURID");
+					result = executeQuery.getString("CURID").trim().isEmpty()?"CNY":executeQuery.getString("CURID").trim();
 				}
 			}
 		}catch (Exception e) {
