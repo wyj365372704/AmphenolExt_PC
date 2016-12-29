@@ -24,7 +24,7 @@ window.location.href="/logo.jsp";
 <frameset rows="96,*,24" frameborder="no" border="5" framespacing="0">
   <frame src="commons/top.jsp" name="topFrame" scrolling="No" id="topFrame" />
   <frameset rows="*" cols="190,10,*" id="exFra" name="exFra" frameborder="no" border="5" framespacing="0">
-    <frame src="commons/left.html" name="exLeftFrame" scrolling="auto" noresize="noresize" id="exLeftFrame" />
+    <frame src="commons/left.jsp" name="exLeftFrame" scrolling="auto" noresize="noresize" id="exLeftFrame" />
     <frame src="commons/explorer_scroll.html" name="exScrollFrame" scrolling="No" noresize="noresize" id="exScrollFrame" />
 	<frame src="commons/right.jsp" name="exMainTFrame" scrolling="auto" noresize="noresize" id="exMainTFrame" />
 	</frameset>

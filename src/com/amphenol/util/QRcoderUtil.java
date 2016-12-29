@@ -65,7 +65,7 @@ public class QRcoderUtil {
 			os.close();
 			result = "QRImages/"+file.getName();
 		} catch (Exception e) {
-			if(file.exists())
+			if(file != null && file.exists())
 				file.delete();
 			e.printStackTrace();
 		}

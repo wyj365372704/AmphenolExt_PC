@@ -19,4 +19,13 @@ public class ConstantUtils {
 	public static String DATABASE_PASSWORD="QSECOFR";
 	public static String ENSURE_DATE_URL="http://10.1.5.37:36001/SystemLink/servlet/SystemLinkServlet";
 	
+	/** ·Ö¸î·û£º, */
+	public static final String SPLIT_0 = ",";
+	
+	/** ·Ö¸î·û£º; */
+	public static final String SPLIT_1 = ";";
+	
+	/** ·Ö¸î·û£º-*/
+	public static final String SPLIT_2 = "-";
+	
 }

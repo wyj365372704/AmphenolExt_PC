@@ -45,6 +45,7 @@
 				<li class="li_opt"><a href="../supplier/makeMark.jsp" target="exMainTFrame" title=""><span>制作生产标签</span></a></li><!--  li_opt 样式为停留在当前二级菜单页面所应用的样式  -->
 				<li><a href="../supplier/ensureDate.jsp" target="exMainTFrame" title=""><span>确认送货日期</span></a></li>
 				<li><a href="../supplier/buyIn.jsp" target="exMainTFrame" title=""><span>采购单</span></a></li>
+				<li><a href="../SubcontractPurchaseServlet" target="exMainTFrame" title=""><span>委外订单</span></a></li>
 				<li><a href="../supplier/myFhd.jsp" target="exMainTFrame" title=""><span>打印送货单</span></a></li>
 				<li><a href="../supplier/myFhd_all.jsp" target="exMainTFrame" title=""><span>我的送货单</span></a></li>
 			</ul>
