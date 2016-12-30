@@ -13,7 +13,8 @@
 <script src="js/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 </head>
 <script type="text/javascript">
-	function submit2() {
+	function submit2(toPage) {
+		document.getElementById("currentPage").value = toPage;
 		document.getElementsByName("queryform")[0].submit();
 	}
 	function gopage(){
@@ -31,6 +32,13 @@
 								+ (window.outerWidth / 2)
 								+ ',toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
 	}
+		function onclear(){
+		document.getElementsByName("buyno")[0].value="";
+		document.getElementsByName("ordno")[0].value="";
+		document.getElementsByName("startDate")[0].value="";
+		document.getElementsByName("endDate")[0].value="";
+		document.getElementsByName("currentPage")[0].value="0";
+	}
 </script>
 
 
@@ -38,10 +46,12 @@
 	<div class="path">您现在的位置： 首页 &gt; 生产 &gt; 采购订单</div>
 	<form action="SubcontractPurchaseServlet" method="post"
 		name="queryform">
+		<input type="hidden" id="currentPage" name="currentPage"
+			value="${currentPage }">
 		<div class="search">
 			<h2>
 				<span class="fl">外协订单查询</span> <span class="fr"><input
-					name="" type="button" class="search_button" onclick="submit2();" />
+					name="" type="button" class="search_button" onclick="submit2(1);" />
 					<input name="rs" type="button" class="purge_button"
 					onclick="onclear();" /> </span>
 				<!--  span里无内容时，此span不能删除  -->
@@ -127,9 +137,13 @@
 		</div>
 		<div class="page">
 			共有&nbsp;${pageCount}&nbsp;页&nbsp;&nbsp;${itemCount}&nbsp;条记录，当前为第&nbsp;${currentPage}&nbsp;页
-			<a title="" onclick="submit2(1);">首页</a> <a title="" onclick="submit2(${currentPage-1});">上一页</a> 
-			<a title="" onclick="submit2(${currentPage+1});">下一页</a> <a title="" onclick="submit2(${pageCount});">尾页</a> 每页${pageSpace}条 到第<input
-				type="text" class="page_input" id="gpageno" value="1" />页 <input type="button" value="" class="go_button" onclick="gopage()"/></div>
+			<a title="" onclick="submit2(1);">首页</a> <a title=""
+				onclick="submit2(${currentPage-1});">上一页</a> <a title=""
+				onclick="submit2(${currentPage+1});">下一页</a> <a title=""
+				onclick="submit2(${pageCount});">尾页</a> 每页${pageSpace}条 到第<input
+				type="text" class="page_input" id="gpageno" value="1" />页 <input
+				type="button" value="" class="go_button" onclick="gopage()" />
+		</div>
 	</form>
 </body>
 </html>

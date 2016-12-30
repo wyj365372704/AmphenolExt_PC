@@ -36,14 +36,16 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 	String ordno = "";
 	String startDate = "";
 	String endDate = "";
+
 	int pageCount ;
 	int itemCount;
-	int currentPage;
-	
-	
+	int currentPage =1 ;
+	int pageSpace = 20;
+
+
 	List<Map> results;
-	
-	
+
+
 
 	Connection connXA = null ;
 	Connection conn = null ;
@@ -60,7 +62,7 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 		envIdXA = (String) request.getSession().getAttribute("envIdXA");
 		userCode = (String) request.getSession().getAttribute("userCode");
 		stid = (String) request.getSession().getAttribute("stid");
-		
+
 		buyno = request.getParameter("buyno");
 		ordno = request.getParameter("ordno");
 		startDate = request.getParameter("startDate");
@@ -97,6 +99,12 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 
 
 		////
+		try {
+			currentPage = Integer
+					.parseInt(request.getParameter("currentPage"));
+		} catch (Exception e) {
+			currentPage = 1;
+		}
 
 		getPOMAST();
 
@@ -109,7 +117,11 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
+
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("pageSpace", pageSpace);
+		request.setAttribute("itemCount", itemCount);
 		request.setAttribute("buyno", buyno);
 		request.setAttribute("ordno", ordno);
 		request.setAttribute("startDate", startDate);
@@ -130,8 +142,9 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 		try {
 			statement = connXA.createStatement();
 			StringBuilder sqlBuilder = new StringBuilder();
-			sqlBuilder.append("SELECT A.* FROM ")
-			.append(envIdXA.trim())
+			//			sqlBuilder.append("SELECT A.*,ROWNUMBER() OVER AS RN FROM ")
+			//			sqlBuilder.append("SELECT COUNT(*) FROM ")
+			sqlBuilder.append(envIdXA.trim())
 			.append(".POMAST A , ").
 			append(envIdXA.trim()).
 			append(".MOPORF B WHERE A.ORDNO = B.PONR AND A.ORDNO !='' AND A.VNDNR = '")
@@ -172,10 +185,33 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 					sqlBuilder.append(")");
 				}
 			}
-			sqlBuilder.append(" ORDER BY A.ORDNO DESC");
-//			String sql = "SELECT ORDNO,HOUSE,CURID,BUYNO,PSTTS,ACTDT FROM "+envIdXA.trim()+".POMAST WHERE VNDNR = '"+userCode+"' AND PSTTS != '99' "+"ORDER BY ORDNO DESC";
-			System.out.println("sql is "+sqlBuilder.toString());
-			executeQuery = statement.executeQuery(sqlBuilder.toString());
+
+
+			System.out.println("SELECT COUNT(*) AS CN FROM "+sqlBuilder.toString());
+			executeQuery = statement.executeQuery("SELECT COUNT(*) AS CN FROM "+sqlBuilder.toString());
+			if(executeQuery!=null){
+				if(executeQuery.next()){
+					itemCount = executeQuery.getInt("CN");
+				}
+				executeQuery.close();
+			}
+
+			//-----------维护pageCount
+			pageCount = itemCount % pageSpace == 0 ? itemCount / pageSpace
+					: itemCount / pageSpace + 1;
+
+			//-----------维护currentPage
+		
+			if (currentPage > pageCount)
+				currentPage = pageCount;
+			if (currentPage < 1)
+				currentPage = 1;
+			
+			String sql = "SELECT * FROM (SELECT A.*,ROWNUMBER() OVER() AS RN FROM "+sqlBuilder.toString()+") " +
+					"AS RS WHERE RS.RN BETWEEN "+ ((currentPage - 1) * pageSpace + 1) + " AND "
+					+ (currentPage * pageSpace)+" ORDER BY RS.ORDNO DESC";
+			System.out.println("sql is "+sql);
+			executeQuery = statement.executeQuery(sql);
 			if(executeQuery!=null){
 				while(executeQuery.next()){
 					Map<String,String> item = new HashMap();
