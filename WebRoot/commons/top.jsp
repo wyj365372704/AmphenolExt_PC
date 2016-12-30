@@ -22,9 +22,7 @@ String envName = (String)session.getAttribute("envName");
 <body class="head_body_bg">
 
 <div class="head">
-
 	<div class="head_top">
-	
 		<img src="../images/logo.png" style="width: 200px;height: 51px;float: left;">
 		<div class="head_top_r">
 			<p class="p_t"><a href="../commons/right.jsp" target="exMainTFrame" title="" class="home">首页</a>  <a href="../userinterface/修改密码.html" target="exMainTFrame" title="" class="password">修改密码</a> <a href="#" title="" class="help">帮助中心</a> <a href="#" title="" class="logout" onclick="logout();">注销</a> </p>
