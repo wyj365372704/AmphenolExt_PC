@@ -2,6 +2,12 @@ package com.amphenol.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +21,13 @@ import com.amphenol.tools.HttpServer;
 import com.amphenol.util.ConstantUtils;
 
 public class EnsureDateServlet extends HttpServlet {
+	Connection conn = null ;
+	Statement statement = null;
+	ResultSet resultSet = null;
+
+	String envId = "";
+	String userCode = "";
+
 	String PISQJI = "";
 	String ORDRJI = "";
 	String OLDDATE = "";
@@ -29,6 +42,23 @@ public class EnsureDateServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		envId = (String) request.getSession().getAttribute("envId");
+
+		try {
+			java.sql.DriverManager.registerDriver(new com.ibm.as400.access.AS400JDBCDriver());
+			Class.forName("com.ibm.as400.access.AS400JDBCDriver");
+			String url = "jdbc:as400://" + ConstantUtils.DATABASE_IP + "/"
+					+ envId + ";translate binary=true";
+			conn = DriverManager.getConnection(url,
+					ConstantUtils.DATABASE_NAME,
+					ConstantUtils.DATABASE_PASSWORD);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+
 		PISQJI = request.getParameter("PISQJI");
 		ORDRJI = request.getParameter("ORDRJI");
 		OLDDATE = request.getParameter("OLDDATE");
@@ -43,7 +73,6 @@ public class EnsureDateServlet extends HttpServlet {
 		try {
 			newDate = dateFormat.format(dateFormat2.parse(newDate));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -54,10 +83,53 @@ public class EnsureDateServlet extends HttpServlet {
 				return ;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
-		String xml = "";
+		String sql = "SELECT * FROM "+envId.trim()+".ZDELIDA WHERE ORDRJI = '"+ORDRJI+"' AND PISQJI = '"+PISQJI+"' AND BKSQJI = '"+BKSQJI+"' ORDER BY ORDSEQ DESC";
+		try {
+			statement = conn.createStatement();
+			resultSet = statement.executeQuery(sql);
+			if(resultSet.next()){
+				if(resultSet.getInt("STAUS") == 10){
+					out.print("<script language='javascript'>alert('错误：交期审核状态非法！');window.opener.location.href=window.opener.location.href;window.close();</script>");
+					throw new RuntimeException();
+				}
+				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI) VALUES ('"+ORDRJI+"','"+PISQJI+
+						"','"+BKSQJI+"','"+resultSet.getInt("ORDSEQ")+"','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"')";
+			}else{
+				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI) VALUES ('"+ORDRJI+"','"+PISQJI+
+						"','"+BKSQJI+"','1','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"')";
+			}
+			System.out.println("sql is "+sql);
+			statement.execute(sql);
+			out.print("<script language=javascript>window.opener.location.href=window.opener.location.href;window.close();");
+			out.print("</script>");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}finally{
+			try {
+				if(resultSet!=null)
+					resultSet.close();
+				if(statement!=null)
+					statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+
+		try {
+			out.flush();
+			out.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		/*
+
+		 String xml = "";
 		if(BKSQJI.equals("0")){
 			xml = "<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE System-Link SYSTEM 'SystemLinkRequest.dtd'>"
 					+"<System-Link><Login userId='amapics' password='amapics' maxIdle='900000' properties='com.pjx.cas.domain.EnvironmentId=M1, com.pjx.cas.domain.SystemName=S844DD1W, com.pjx.cas.user.LanguageId=zh'/>"
@@ -148,7 +220,7 @@ public class EnsureDateServlet extends HttpServlet {
 		out.print("<script language=javascript>window.opener.location.href=window.opener.location.href;window.close();");
 		out.print("</script>");
 		out.flush();
-		out.close();
+		out.close();*/
 	}
 
 }
