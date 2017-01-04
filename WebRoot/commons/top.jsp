@@ -4,6 +4,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 String envName = (String)session.getAttribute("envName");
+
+String userName = (String)session.getAttribute("userName");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -26,7 +28,7 @@ String envName = (String)session.getAttribute("envName");
 		<img src="../images/logo.png" style="width: 200px;height: 51px;float: left;">
 		<div class="head_top_r">
 			<p class="p_t"><a href="../commons/right.jsp" target="exMainTFrame" title="" class="home">首页</a>  <a href="../userinterface/修改密码.html" target="exMainTFrame" title="" class="password">修改密码</a> <a href="#" title="" class="help">帮助中心</a> <a href="#" title="" class="logout" onclick="logout();">注销</a> </p>
-			<p class="p_b"> <span class="welcome fr"><font color="red">环境：<%=envName %></font>&nbsp&nbsp&nbsp&nbsp用户：Ampheno RF</span> </p>
+			<p class="p_b"> <span class="welcome fr"><font color="red">环境：<%=envName %></font>&nbsp&nbsp&nbsp&nbsp用户：<%=userName %></span> </p>
 		</div>
 	</div>
 	
