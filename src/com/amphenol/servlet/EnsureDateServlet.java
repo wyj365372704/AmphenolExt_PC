@@ -27,6 +27,7 @@ public class EnsureDateServlet extends HttpServlet {
 
 	String envId = "";
 	String userCode = "";
+	String userHouse = "";
 
 	String PISQJI = "";
 	String ORDRJI = "";
@@ -43,7 +44,8 @@ public class EnsureDateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		envId = (String) request.getSession().getAttribute("envId");
-
+		userHouse = (String) request.getSession().getAttribute("userHouse");
+		
 		try {
 			java.sql.DriverManager.registerDriver(new com.ibm.as400.access.AS400JDBCDriver());
 			Class.forName("com.ibm.as400.access.AS400JDBCDriver");
@@ -95,11 +97,11 @@ public class EnsureDateServlet extends HttpServlet {
 					out.print("<script language='javascript'>alert('错误：交期审核状态非法！');window.opener.location.href=window.opener.location.href;window.close();</script>");
 					throw new RuntimeException();
 				}
-				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI) VALUES ('"+ORDRJI+"','"+PISQJI+
-						"','"+BKSQJI+"','"+resultSet.getInt("ORDSEQ")+"','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"')";
+				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI,WHIDJI) VALUES ('"+ORDRJI+"','"+PISQJI+
+						"','"+BKSQJI+"','"+(resultSet.getInt("ORDSEQ")+1)+"','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"','"+userHouse.trim()+"')";
 			}else{
-				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI) VALUES ('"+ORDRJI+"','"+PISQJI+
-						"','"+BKSQJI+"','1','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"')";
+				sql = "INSERT INTO "+envId.trim()+".ZDELIDA (ORDRJI,PISQJI,BKSQJI,ORDSEQ,WKDTJI,STAUS,VNDRJI,WHIDJI) VALUES ('"+ORDRJI+"','"+PISQJI+
+						"','"+BKSQJI+"','1','"+new BigDecimal(newDate).subtract(new BigDecimal(19000000)).toString()+"','10','"+userCode+"','"+userHouse.trim()+"')";
 			}
 			System.out.println("sql is "+sql);
 			statement.execute(sql);
