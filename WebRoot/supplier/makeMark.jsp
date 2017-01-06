@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*"
+	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.amphenol.util.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.*"%>
@@ -15,7 +16,7 @@
 
 	Calendar calendar = Calendar.getInstance();
 	calendar.setTimeInMillis(System.currentTimeMillis());
-	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	String userName = (String) session.getAttribute("userName");
 	String envId = (String) session.getAttribute("envId");
 	String envIdXA = (String) session.getAttribute("envIdXA");
@@ -46,12 +47,12 @@
 				+ "."
 				+ ConstantUtils.ITNFROM
 				+ ") a ) temp ";
-		sql0=sql0+" where temp.rowid >=0 and temp.rowid <= 10";
+		sql0 = sql0 + " where temp.rowid >=0 and temp.rowid <= 10";
 
 		stmt = (Statement) conn.createStatement();
 		stmt.execute(sql0);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 		rs = (ResultSet) stmt.getResultSet();
-		int i=0;
+		int i = 0;
 		while (rs.next()) {
 			String str = "";
 			if ("ITMRVA".equalsIgnoreCase(ConstantUtils.ITNFROM)) {
@@ -61,14 +62,15 @@
 			}
 			result = result + "<option value='" + str.trim() + "'>"
 					+ str.trim() + "</option>";
-					i++;
-					//if(i>10){
-					//	break;
-					//}
+			i++;
+			//if(i>10){
+			//	break;
+			//}
 		}
 		rs.close();
 		stmt.close();
-		String sql3 = "select VN35 from " + envIdXA.trim() + ".VENNAM where vndnr='"+userCode+"'";
+		String sql3 = "select VN35 from " + envIdXA.trim()
+				+ ".VENNAM where vndnr='" + userCode + "'";
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(sql3);
 		if (rs != null) {
@@ -209,7 +211,6 @@
 	  htmlobj=$.ajax({url:"./test2.jsp?itnot9="+selVal,async:false, datatype: "json", type: "GET", contentType: "application/json"
 	  , success:function(data) {//这里的data是由请求页面返回的数据    
                  var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
-                 alert(dataJson);
                  //$("#show").html("data=" + data + " name="+dataJson.name+"  age=" + dataJson.age);     
              document.getElementsByName('fds40ji')[0].value=dataJson.ldesc;
              document.getElementsByName('fldesc')[0].value=dataJson.guige;
@@ -232,18 +233,22 @@
 	$(document).ready(function() {
 		$('select').selectseach();
 		//alert(document.getElementsByName("searcht")[0].value);onchange='getItems();'
-		
+
 	});
-	function getItems(){
+	function getItems() {
 		//alert(document.getElementsByName("searcht")[0].value);
-		var itnot9=document.getElementsByName("searcht")[0].value;
-		$.ajax({url:"./test3.jsp?itnot9="+itnot9,async:false,  type: "GET" , 
-		success:function(data) {//这里的data是由请求页面返回的数据    
-                 //var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
-                 //$("#show").html("data=" + data + " name="+dataJson.name+"  age=" + dataJson.age);  
-                 //alert(data);   
-             document.getElementById('sel').innerHTML= data;       
-                 }});
+		var itnot9 = document.getElementsByName("searcht")[0].value;
+		$.ajax({
+			url : "./test3.jsp?itnot9=" + itnot9,
+			async : false,
+			type : "GET",
+			success : function(data) {//这里的data是由请求页面返回的数据    
+				//var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
+				//$("#show").html("data=" + data + " name="+dataJson.name+"  age=" + dataJson.age);  
+				//alert(data);   
+				document.getElementById('sel').innerHTML = data;
+			}
+		});
 	}
 </script>
 
@@ -253,6 +258,7 @@
 
 <link href="../css/customsDeclaration.css" rel="stylesheet"
 	type="text/css" />
+<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 </head>
 
 <body class="right_body">
@@ -271,80 +277,85 @@
 				<table border="0" cellpadding="0" cellspacing="1"
 					class="public_table">
 					<tr>
-						<td align="right">物料：<font color="red">*</font></td>
-						<td>
-						<select id="sel" name="fordrji" m='search'
-							class='input_w' onchange="changeF();" >
+						<td align="right">物料：<font color="red">*</font>
+						</td>
+						<td><select id="sel" name="fordrji" m='search'
+							class='input_w' onchange="changeF();">
 								<%=result%>
-						</select></td>
+						</select>
+						</td>
 						<td rowspan="11" width="55%">
 							<div id="qrtlb">
 								<div id="qrcodeTable"></div>
-							</div></td>
+							</div>
+						</td>
 					</tr>
 					<tr>
-						<td align="right">描述：<font color="red"></font></td>
+						<td align="right">描述：<font color="red"></font>
+						</td>
 						<td><input name=fds40ji type="text" class="input_w" value=""
-							readonly="readonly" />
-						</td>
+							readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td align="right">规格：<font color="red"></font></td>
+						<td align="right">规格：<font color="red"></font>
+						</td>
 						<td><input name=fldesc type="text" class="input_w" value=""
-							readonly="readonly" />
-						</td>
+							readonly="readonly" /></td>
 					</tr>
 					<tr>
-						<td align="right">每包装数量：<font color="red">*</font></td>
+						<td align="right">每包装数量：<font color="red">*</font>
+						</td>
 						<td><input name=fcout type="text" class="input_w" value="" />
 						</td>
 					</tr>
 					<tr>
-						<td align="right">库存单位：<font color="red"></font></td>
-						<td><input name=fumstt9 type="text" class="input_w" value=""
-							readonly="readonly" />
+						<td align="right">库存单位：<font color="red"></font>
 						</td>
+						<td><input name=fumstt9 type="text" class="input_w" value=""
+							readonly="readonly" /></td>
 					</tr>
 					<tr id="blanch_tr">
-						<td align="right">批号：<font color="red">*</font></td>
-						<td><input name=fblcft9 type="text" class="input_w" value=""/>
+						<td align="right">批号：<font color="red">*</font>
+						</td>
+						<td><input name=fblcft9 type="text" class="input_w" value="" />
 						</td>
 					</tr>
 					<tr>
-						<td align="right">单重：<font color="red">*</font></td>
+						<td align="right">单重：<font color="red">*</font>
+						</td>
 						<td><input name=fweight type="text" class="input_w" value="" />
-						<select id="fweight_unit" class="input_w" style="width: 40px">
-						<option value="g" selected="selected">g</option>
-						<option value="kg">kg</option>
-						</select>
-						</td>
+							<select id="fweight_unit" class="input_w" style="width: 40px">
+								<option value="g" selected="selected">g</option>
+								<option value="kg">kg</option>
+						</select></td>
 					</tr>
 					<tr>
-						<td align="right">毛重：<font color="red">*</font></td>
+						<td align="right">毛重：<font color="red">*</font>
+						</td>
 						<td><input name=fTotalweight type="text" class="input_w"
-							value="" />
-								<select id="fTotalweight_unit" class="input_w" style="width: 40px">
-						<option value="g">g</option>
-						<option value="kg" selected="selected">kg</option>
-						</select>
-						</td>
+							value="" /> <select id="fTotalweight_unit" class="input_w"
+							style="width: 40px">
+								<option value="g">g</option>
+								<option value="kg" selected="selected">kg</option>
+						</select></td>
 					</tr>
 					<tr>
-						<td align="right">日期：<font color="red"></font></td>
-						<td><input name=fdate type="text" class="input_w"
+						<td align="right">日期：<font color="red"></font>
+						</td>
+						<td><input name=fdate type="text" class="time_input"
 							value="<%=format.format(calendar.getTime())%>"
-							readonly="readonly" />
-						</td>
+							onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-{%d}'})" onmouseout="dateIsValid(this,'开始日期')" /></td>
 					</tr>
 					<tr>
-						<td align="right">厂商：<font color="red"></font></td>
-						<td><input name=fproducter type="text" class="input_w"
-							value="<%=changshang.trim()%>" readonly="readonly" />
+						<td align="right">厂商：<font color="red"></font>
 						</td>
+						<td><input name=fproducter type="text" class="input_w"
+							value="<%=changshang.trim()%>" readonly="readonly" /></td>
 					</tr>
 					<tr align="center">
 						<td><input name="makeMark" type="button" class="button_m"
-							value="打印" onclick="show();" /></td>
+							value="打印" onclick="show();" />
+						</td>
 						<td><input name="" type="button" class="button_m" value="返回" />
 						</td>
 					</tr>
@@ -356,6 +367,6 @@
 	</form>
 </body>
 <script language="javascript">
-window.onload = changeF();
+	window.onload = changeF();
 </script>
 </html>
