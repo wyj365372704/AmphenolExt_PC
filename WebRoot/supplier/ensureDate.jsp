@@ -340,6 +340,7 @@ if(userName==null || "".equals(userName.trim())){
 							<th>采购单位</th>
 							<th>采购量</th>
 							<th>未交量(采购单位)</th>
+							<th>创建日期</th>
 							<th>期望交期</th>
 							<th>采购交期</th>
 							<th>是否批次控制</th>
@@ -436,7 +437,7 @@ try{
 			  }
 	
 	
- 	sql="select * from (select SCHRCP.*,ITMSIT.BLCFT9,rownumber() over() as rn from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT where VNDRJI='"+userCode+"' and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
+ 	sql="select * from (select SCHRCP.*,POMAST.ACTDT,ITMSIT.BLCFT9,rownumber() over() as rn from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT,"+envIdXA+".POMAST as POMAST where VNDRJI='"+userCode+"' and SCHRCP.ORDRJI=POMAST.ORDNO and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
  	//String sql="select SCHRCP.*,ITMSIT.BLCFT9 from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT where VNDRJI='"+userCode+"' and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
 // SELECT * FROM (Select 字段1,字段2,字段3,rownumber() over(ORDER BY 排序用的列名 ASC) AS rn from 表名) AS a1 WHERE a1.rn BETWEEN 10 AND 20 
  	//String sql="select SCHRCP.* from "+envIdXA+".SCHRCP as SCHRCP where VNDRJI='"+userCode+"' ";
@@ -462,6 +463,7 @@ try{
  		//result="已经成功连接数据库";
  	
 	   stmt = (Statement) conn.createStatement();
+	   System.out.print("+++sql is "+sql);
 	   stmt.execute(sql);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 	   rs=(ResultSet) stmt.getResultSet();
 	while(rs.next()){ //当前记录指针移动到下一条记录上
@@ -496,6 +498,8 @@ try{
 							<td><font color="red"><%=rs.getString("UCOQJI") %></font></td>
 							<td><font color="red"><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></font>
 							</td>
+							<td><font color="red"><%=(rs.getInt("ACTDT") +Integer.valueOf(19000000))%>
+							</font></td>
 							<%
 							if(staus!=0){%>
 							<td><font color="red"><%=(rs2.getInt("WKDTJI") +Integer.valueOf(19000000))%>
@@ -533,6 +537,8 @@ try{
 							<td><%=rs.getString("ORUMJI") %></td>
 							<td><%=rs.getString("UCOQJI") %></td>
 							<td><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></td>
+							<td><%=(rs.getInt("ACTDT") +Integer.valueOf(19000000))%>
+							</td>
 							<%
 							if(staus!=0){%>
 							<td><%=(rs2.getInt("WKDTJI") +Integer.valueOf(19000000))%></td>
