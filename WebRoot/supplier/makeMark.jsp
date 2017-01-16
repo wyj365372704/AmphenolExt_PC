@@ -104,110 +104,51 @@
 
 <script type="text/javascript" src="../js/jquery.selectseach.min.js"></script>
 <script type="text/javascript">
- 	function check(o){
- 		
- 		document.getElementsByName("operate")[0].value="update";
- 		document.getElementsByName("buyApply")[0].submit();
- 	}
- 	function goList(){
- 		document.getElementsByName("buyApply")[0].action="buyApply.jsp";
-		document.getElementsByName("buyApply")[0].submit();
- 	}
- 	function show(){
- 		//alert(document.getElementById("qrtlb").innerHTML);
- 		document.getElementById("qrtlb").innerHTML="<div id='qrcodeTable'></div>";
- 		//fordrji fblcft9 fcout
- 		var fordrji =document.getElementsByName("fordrji")[0].value;//物料
- 		var fds40ji = document.getElementsByName("fds40ji")[0].value;//描述
- 		var fldesc = document.getElementsByName("fldesc")[0].value;//规格
- 		var fcout = document.getElementsByName("fcout")[0].value;//每箱数量
- 		var fumstt9 = document.getElementsByName("fumstt9")[0].value;//库存单位
- 		var fblcft9 = document.getElementsByName("fblcft9")[0].value;//批号
- 		var fweight = document.getElementsByName("fweight")[0].value;//单重
- 		var fTotalweight = document.getElementsByName("fTotalweight")[0].value;//毛重
- 		var fdate = document.getElementsByName("fdate")[0].value;//日期
- 		var fproducter = document.getElementsByName("fproducter")[0].value;//厂商
- 		var fweight_unit = document.getElementById("fweight_unit").value;//单重单位
- 		var fTotalweight_unit = document.getElementById("fTotalweight_unit").value;//单重单位
-		if(fordrji==null || fordrji==""){
+
+ 	function check(form) {
+		document.getElementById("qrtlb").innerHTML = "<div id='qrcodeTable'></div>";
+
+		if (form.fordrji.value == null || form.fordrji.value == "") {
 			alert("物料不能为空!");
-			return ;
+			return false;
 		}
-		if(isNaN(fcout)){
-		alert("每包装数量输入非法");
+		if (isNaN(form.fcout.value)) {
+			alert("每包装数量输入非法");
+			return false;
 		}
-		
-		if(fcout==null || fcout==""){
+
+		if (form.fcout.value == null || form.fcout.value == "") {
 			alert("每包装数量不能为空!");
-			return ;
+			return false;
 		}
-		if(document.getElementsByName("fblcft9")[0].disabled=="disabled"){
-			if(fblcft9==null || fblcft9==""){
+		if (form.fblcft9.disabled == "disabled") {
+			if (form.fblcft9.value == null || form.fblcft9.value == "") {
 				alert("批号不能为空!");
-				return ;
-			} 
+				return false;
+			}
 		}
-		if(isNaN(fweight)){
-		alert("单重输入非法");
+		if (isNaN(form.fweight.value)) {
+			alert("单重输入非法");
+			return false;
 		}
-		
-		if(fweight==null || fweight==""){
+
+		if (form.fweight.value == null || form.fweight.value == "") {
 			alert("单重不能为空!");
-			return ;
+			return false;
 		}
-		if(isNaN(fTotalweight)){
-		alert("毛重输入非法");
+		if (isNaN(form.outer_weight.value)) {
+			alert("包材重输入非法");
+			return false;
 		}
-		
-		if(fTotalweight==null || fTotalweight==""){
-			alert("毛重不能为空!");
-			return ;
+		if (form.outer_weight.value == null || form.outer_weight.value == "") {
+			alert("包材重不能为空!");
+			return false;
 		}
-		
-		window.open('<%=request.getContextPath()%>/getProductionLabelServlet?fordrji='+ fordrji+'&fds40ji='+fds40ji+'&fldesc='+fldesc+'&fcout='+fcout+'&fumstt9='+fumstt9+'&fblcft9='+fblcft9+'&fweight='+fweight+'&fTotalweight='+fTotalweight+'&fdate='+fdate+'&fproducter='+fproducter+'&fweight_unit='+fweight_unit+'&fTotalweight_unit='+fTotalweight_unit
-		,'newwindow','height=400,width=500,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
-		
-/*  		jQuery('#qrcodeTable').qrcode({
-			render	: "table",
-			text	: "*M"+fordrji+"*B"+fblcft9+"*Q"+fcout
-		});	 */
- 	}
- 	function show1(){
- 		document.getElementById("show1").style.color="red";
- 		//document.getElementById("show").style.color="";
- 		document.getElementById("show2").style.color="";
- 		
- 		document.getElementById("showdata1").style.display="";
- 		//document.getElementById("showdata").style.display="none";
- 		document.getElementById("showdata2").style.display="none";
- 		
- 		//alert("1");
- 	}
- 	function show2(){
- 		document.getElementById("show1").style.color="";
- 		//document.getElementById("show").style.color="";
- 		document.getElementById("show2").style.color="red";
- 		
- 		document.getElementById("showdata1").style.display="none";
- 		//document.getElementById("showdata").style.display="none";
- 		document.getElementById("showdata2").style.display="";
- 	}
- 	function getMore(id,idx){//alert(//document.getElementById("g"+idx).style.backgroundColor);
- 		//document.getElementById("g"+idx).style.backgroundColor="red";
- 		//alert("dd");
- 		document.getElementsByName("mid")[0].value=id;
- 		document.getElementsByName("buyApply")[0].action="buyApplyCheck.jsp";
-		document.getElementsByName("buyApply")[0].submit();
- 	}
- 	function fordrjiChange(){
- 		alert("test");
- 	}
- 	
- 	    
+		return true;
+	}
+
  	function changeF() {
-	  //document.getElementById('txt').value = document.getElementById('sel').options[document.getElementById('sel').selectedIndex].value;
 	  var selVal=document.getElementById('sel').value;
-	  //alert(selVal);
 	  htmlobj=$.ajax({url:"./test2.jsp?itnot9="+selVal,async:false, datatype: "json", type: "GET", contentType: "application/json"
 	  , success:function(data) {//这里的data是由请求页面返回的数据    
                  var dataJson = JSON.parse(data); // 使用json2.js中的parse方法将data转换成json格式   
@@ -223,13 +164,18 @@
              }else{
              document.getElementsByName("fblcft9")[0].disabled=false;
              }
+			var b2cqcd = dataJson.b2cqcd;
+             if(b2cqcd == "g"){
+         	    document.getElementsByName("fweight_unit")[0].options[1].selected = false;
+          	   document.getElementsByName("fweight_unit")[0].options[0].selected = true;
+             }else{
+				document.getElementsByName("fweight_unit")[0].options[0].selected = false;
+             	document.getElementsByName("fweight_unit")[0].options[1].selected = true;
+             }
                  }});
          //  alert(htmlobj.responseText);
 	} 
-	function research(){
-		
-		//document.getElementById('sel').innerHTML="<%=result%>";
-	}
+
 	$(document).ready(function() {
 		$('select').selectseach();
 		//alert(document.getElementsByName("searcht")[0].value);onchange='getItems();'
@@ -271,7 +217,7 @@
 			<!--  span里无内容时，此span不能删除  -->
 		</h2>
 		<div class="public_inner" style="width:98%">
-			<form action="makeMark.jsp" method="post" name="makeMark">
+			<form action="../getProductionLabelServlet" method="post" name="makeMark" target="_blank">
 
 
 				<table border="0" cellpadding="0" cellspacing="1"
@@ -311,8 +257,7 @@
 					<tr>
 						<td align="right">库存单位：<font color="red"></font>
 						</td>
-						<td><input name=fumstt9 type="text" class="input_w" value=""
-							readonly="readonly" /></td>
+						<td><input name=fumstt9 type="text" class="input_w" value="" /></td>
 					</tr>
 					<tr id="blanch_tr">
 						<td align="right">批号：<font color="red">*</font>
@@ -324,20 +269,21 @@
 						<td align="right">单重：<font color="red">*</font>
 						</td>
 						<td><input name=fweight type="text" class="input_w" value="" />
-							<select id="fweight_unit" class="input_w" style="width: 40px">
+							<select name="fweight_unit" class="input_w" style="width: 40px">
 								<option value="g" selected="selected">g</option>
 								<option value="kg">kg</option>
 						</select></td>
 					</tr>
 					<tr>
-						<td align="right">毛重：<font color="red">*</font>
+						<td align="right">包材重：<font color="red">*</font>
 						</td>
-						<td><input name=fTotalweight type="text" class="input_w"
-							value="" /> <select id="fTotalweight_unit" class="input_w"
+						<td><input name="outer_weight" type="text" class="input_w"
+							value="" /> <select name="outer_weight_unit" class="input_w"
 							style="width: 40px">
 								<option value="g">g</option>
 								<option value="kg" selected="selected">kg</option>
-						</select></td>
+						</select>
+						</td>
 					</tr>
 					<tr>
 						<td align="right">日期：<font color="red"></font>
@@ -350,11 +296,11 @@
 						<td align="right">厂商：<font color="red"></font>
 						</td>
 						<td><input name=fproducter type="text" class="input_w"
-							value="<%=changshang.trim()%>" readonly="readonly" /></td>
+							value="<%=changshang.trim()%>"/></td>
 					</tr>
 					<tr align="center">
-						<td><input name="makeMark" type="button" class="button_m"
-							value="打印" onclick="show();" />
+						<td><input name="makeMark" type="submit" class="button_m"
+							value="打印" onclick="return check(this.form)" />
 						</td>
 						<td><input name="" type="button" class="button_m" value="返回" />
 						</td>

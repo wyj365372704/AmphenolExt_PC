@@ -18,10 +18,10 @@ public class getProductionLabelServlet extends HttpServlet {
 	private String fumstt9 = "";//库存单位
 	private String fblcft9 = "";//批号
 	private String fweight = "";//净重
-	private String fTotalweight = "";//毛重
+	private String outer_weight = "";//包材重
 	private String fdate = "";//日期
 	private String fproducter = "";//厂商
-	private String fTotalweight_unit = "kg";//毛重单位
+	private String outer_weight_unit = "kg";//包材重单位
 	private String fweight_unit = "g";//单重单位
 	
 	
@@ -46,11 +46,15 @@ public class getProductionLabelServlet extends HttpServlet {
 				"ISO8859-1"), "utf-8");
 		fumstt9 =  new String(request.getParameter("fumstt9").getBytes(
 				"ISO8859-1"), "utf-8");
-		fblcft9 = new String(request.getParameter("fblcft9").getBytes(
-				"ISO8859-1"), "utf-8");
+		try {
+			fblcft9 = new String(request.getParameter("fblcft9").getBytes(
+					"ISO8859-1"), "utf-8");
+		} catch (Exception e) {
+			fblcft9 = "";
+		}
 		fweight = new String(request.getParameter("fweight").getBytes(
 				"ISO8859-1"), "utf-8");
-		fTotalweight = new String(request.getParameter("fTotalweight").getBytes(
+		outer_weight = new String(request.getParameter("outer_weight").getBytes(
 				"ISO8859-1"), "utf-8");
 		fdate = new String(request.getParameter("fdate").getBytes(
 				"ISO8859-1"), "utf-8");
@@ -58,19 +62,8 @@ public class getProductionLabelServlet extends HttpServlet {
 				"ISO8859-1"), "utf-8");
 		fweight_unit = new String(request.getParameter("fweight_unit").getBytes(
 				"ISO8859-1"), "utf-8");
-		fTotalweight_unit = new String(request.getParameter("fTotalweight_unit").getBytes(
+		outer_weight_unit = new String(request.getParameter("outer_weight_unit").getBytes(
 				"ISO8859-1"), "utf-8");
-		
-		System.out.println("fordrji is "+fordrji);
-		System.out.println("fds40ji is "+fds40ji);
-		System.out.println("fldesc is "+fldesc);
-		System.out.println("fcout is "+fcout);
-		System.out.println("fumstt9 is "+fumstt9);
-		System.out.println("fblcft9 is "+fblcft9);
-		System.out.println("fweight is "+fweight);
-		System.out.println("fTotalweight is "+fTotalweight);
-		System.out.println("fdate is "+fdate);
-		System.out.println("fproducter is "+fproducter);
 		
 		String result = "*M"+fordrji;
 		result += "*B"+fblcft9;
@@ -86,12 +79,20 @@ public class getProductionLabelServlet extends HttpServlet {
 		request.setAttribute("fumstt9", fumstt9);
 		request.setAttribute("fblcft9", fblcft9);
 		request.setAttribute("fweight", fweight);
-		request.setAttribute("fTotalweight", fTotalweight);
 		request.setAttribute("fdate", fdate);
 		request.setAttribute("fproducter", fproducter);
 		request.setAttribute("qrcodeurl", encoderQRCoder);
-		request.setAttribute("fTotalweight_unit", fTotalweight_unit);
 		request.setAttribute("fweight_unit", fweight_unit);
+		double totalweight = Double.parseDouble(fweight)*Double.parseDouble(fcout);
+		if(!"g".equals(fweight_unit)){//单重单位
+			totalweight *=1000;
+		}
+		if(!"g".equals(outer_weight_unit)){//包材单位
+			totalweight +=Double.parseDouble(outer_weight)*1000;
+		}else{
+			totalweight +=Double.parseDouble(outer_weight);
+		}
+		request.setAttribute("totalweight", totalweight);
 		request.getRequestDispatcher("supplier/product_label.jsp").forward(request, response);
 	}
 

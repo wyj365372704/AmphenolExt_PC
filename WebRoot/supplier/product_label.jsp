@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>生产标签</title>
 </head>
 <body>
 <table  border="0" cellpadding="2px" style="border-collapse: collapse;">
@@ -12,9 +12,9 @@
 <td rowspan="3" align="center" valign="middle"><img src="${qrcodeurl}" width="80px"/></td><td>物料:${fordrji}</td>
 </tr>
 <tr><td>描述:${fds40ji}</td></tr>
-<tr><td>规格:${fldesc}</td></tr>
-<tr><td>数量:${fcout }</td><td>批号:${fblcft9}</td></tr>
-<tr><td>净重:${fweight }${fweight_unit}</td><td>毛重:${fTotalweight}${fTotalweight_unit}</td></tr>
+<tr><td>批号:${fblcft9}</td></tr>
+<tr><td>数量:${fcout }</td><td>单重:${fweight }${fweight_unit}</td></tr>
+<tr><td>净重:${fcout*fweight }${fweight_unit}</td><td>毛重:${totalweight }g</td></tr>
 <tr><td>日期:${fdate }</td><td>厂商:${fproducter}</td></tr>
 </table>
 </body>

@@ -25,6 +25,7 @@ Connection connXA = null;
 	String kcdw = "";
 	String BLCFT9 ="1";
 	float weight = 0.0f;
+	String B2CQCD = "";
 try{
 	java.sql.DriverManager.registerDriver (new com.ibm.as400.access.AS400JDBCDriver ()); 
 	Class.forName("com.ibm.as400.access.AS400JDBCDriver");	
@@ -40,20 +41,18 @@ try{
  	stmt = (Statement) connXA.createStatement();
 	stmt.execute(sql0);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 	rs=(ResultSet) stmt.getResultSet();
-	while(rs.next()){
+	if(rs.next()){
 		itrvt9 = rs.getString("ITRVT9");
 		kcdw = rs.getString("UMSTT9");
 		BLCFT9 =rs.getString("BLCFT9");
 	}
 	rs.close();
 	stmt.close();
-	String sql1="select * From "+envId.trim()+".ZITMEXT where STID = '"+stid+"' and ITNBR = '"+itnot9+"' and ITRV = 
-
-'"+itrvt9+"'";
+	String sql1="select * From "+envId.trim()+".ZITMEXT where STID = '"+stid+"' and ITNBR = '"+itnot9+"' and ITRV = '"+itrvt9+"'";
 	stmt = (Statement) connLoc.createStatement();
 	stmt.execute(sql1);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 	rs=(ResultSet) stmt.getResultSet();
-	while(rs.next()){
+	if(rs.next()){
 		//itrvt9 = rs.getString("ITRVT9");
 		ldesc=rs.getString("LDESC");
 		guige = rs.getString("SDESC");
@@ -62,28 +61,29 @@ try{
 	stmt.close();
 	//From %AMFLIB%.ITMRVA% where STID = ITMSIT.STIDT9 and ITNBR = ITMSIT.ITNOT9 and ITRV = ITMSIT.ITRVT9
 	
-		String sql2="select * From "+envIdXA.trim()+".ITMRVA where STID = '"+stid+"' and ITNBR = '"+itnot9+"' and 
-
-ITRV = '"+itrvt9+"'";
+		String sql2="select * From "+envIdXA.trim()+".ITMRVA where STID = '"+stid+"' and ITNBR = '"+itnot9+"' and ITRV = '"+itrvt9+"'";
 		stmt = (Statement) connXA.createStatement();
-		stmt.execute(sql2);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法
-
-。
+		stmt.execute(sql2);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 System.out.println("sql2 = "+sql2 );
 		rs=(ResultSet) stmt.getResultSet();
-		while(rs.next()){
+		if(rs.next()){
 			//itrvt9 = rs.getString("ITRVT9");
 		    if(null==ldesc || ldesc.trim().equals("")){
 			ldesc=rs.getString("ITDSC");
 		    }
 			weight = rs.getFloat("WEGHT");
-			
+			B2CQCD = rs.getString("B2CQCD");
+			if("KG".equals(B2CQCD)||"kg".equals(B2CQCD)){
+				B2CQCD = "kg";
+			}else{
+				B2CQCD = "g";
+			}
 		}
-		//ldesc=ldesc+"123";
 	
 	rs.close();
 	stmt.close();
 	}catch(Exception e){
+	System.out.println(e);
 	e.printStackTrace();
 }finally{
 	try{
@@ -99,4 +99,4 @@ System.out.println("----->the blcft9 is "+BLCFT9.trim());
 %>
 {"ldesc":"<%=ldesc.trim() %>","guige":"<%=guige.trim() %>","kcdw":"<%=kcdw.trim() %>","blcft9":"<%=BLCFT9.trim() 
 
-%>","weight":"<%=weight %>"}
+%>","weight":"<%=weight %>","b2cqcd":"<%=B2CQCD %>"}
