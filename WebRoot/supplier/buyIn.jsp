@@ -337,7 +337,10 @@ window.location.href="logo.jsp";
 
 
 <%	
-
+NumberFormat  decFormat = NumberFormat.getNumberInstance();
+decFormat.setMaximumFractionDigits(3);
+decFormat.setGroupingUsed(false);
+decFormat.setRoundingMode(RoundingMode.UP);
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
@@ -460,8 +463,10 @@ try{
 	<td><font color="red"><%=rs.getString("ITNOJI") %></font></td>
 	<td><font color="red"><%=rs.getString("DS40JI")%></font></td>
 	<td><font color="red"><%=rs.getString("ORUMJI") %></font></td>
-	<td><font color="red"><%=rs.getString("UCOQJI") %></font></td>
-	<td><font color="red"><%=rs.getFloat("UMCVJI")==0?0:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI")) %></font></td>
+	<%-- <td><font color="red"><%=rs.getString("UCOQJI") %></font></td> --%>
+	<td><font color="red"><%=decFormat.format(rs.getFloat("UCOQJI")) %></font></td>
+	<%-- <td><font color="red"><%=rs.getFloat("UMCVJI")==0?0:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI")) %></font></td> --%>
+	<td><font color="red"><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></font></td>
 	<td><font color="red"><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </font></td>
 	<td><font color="red"><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></font></td>
 </tr>
@@ -471,14 +476,14 @@ try{
 <tr>
 	<td><input type="button" value="添加送货单" onclick="goshd('?item1=<%=rs.getString("ORDRJI") + "-"
 								+ rs.getInt("PISQJI") + "-"
-								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=rs.getString("DS40JI")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=rs.getInt("UMCVJI")==0?0:(rs.getInt("QTYOJI") / rs.getInt("UMCVJI"))%>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
+								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=rs.getString("DS40JI")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
 	<td><%=rs.getString("WHIDJI") %></td>
 	<td><%=rs.getString("ORDRJI")+"-"+rs.getInt("PISQJI")+"-"+rs.getInt("BKSQJI") %></td>
 	<td><%=rs.getString("ITNOJI") %></td>
 	<td><%=rs.getString("DS40JI")%></td>
 	<td><%=rs.getString("ORUMJI") %></td>
-	<td><%=rs.getString("UCOQJI") %></td>
-	<td><%=rs.getFloat("UMCVJI")==0?0:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI")) %></td>
+	<td><%=decFormat.format(rs.getFloat("UCOQJI")) %></td>
+	<td><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></td>
 	<td><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </td>
 	<td><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></td>
 </tr>

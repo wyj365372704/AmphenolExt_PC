@@ -266,6 +266,7 @@
 	}
 </script>
 <%
+NumberFormat  decFormat = NumberFormat.getNumberInstance();
 			  	  int currentPage = 1;//当前页码
 			  int pageSpace = 10 ;//每页显示条数
 			  int itemCount = 0 ;//总条数
@@ -495,8 +496,8 @@ try{
 							<td><font color="red"><%=rs.getString("ITNOJI") %></font></td>
 							<td><font color="red"><%=rs.getString("DS40JI") %></font></td>
 							<td><font color="red"><%=rs.getString("ORUMJI") %></font></td>
-							<td><font color="red"><%=rs.getString("UCOQJI") %></font></td>
-							<td><font color="red"><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></font>
+							<td><font color="red"><%=decFormat.format(rs.getFloat("UCOQJI")) %></font></td>
+							<td><font color="red"><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></font>
 							</td>
 							<td><font color="red"><%=(rs.getInt("ACTDT") +Integer.valueOf(19000000))%>
 							</font></td>
@@ -535,8 +536,8 @@ try{
 							<td><%=rs.getString("ITNOJI") %></td>
 							<td><%=rs.getString("DS40JI") %></td>
 							<td><%=rs.getString("ORUMJI") %></td>
-							<td><%=rs.getString("UCOQJI") %></td>
-							<td><%=rs.getInt("QTYOJI")/rs.getInt("UMCVJI") %></td>
+							<td><%=decFormat.format(rs.getFloat("UCOQJI")) %></td>
+							<td><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></td>
 							<td><%=(rs.getInt("ACTDT") +Integer.valueOf(19000000))%>
 							</td>
 							<%

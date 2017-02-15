@@ -236,12 +236,16 @@
 														</tr>
 													</table>
 												</td>
-												<td><c:out value="${ son1.ucorq}" /></td>
-												<td><c:out value="${son1.curpr}" /></td>
+												<td><fmt:formatNumber value="${son1.ucorq}"
+														pattern="#0.0" />
+														</td>
+												<td>
+												<fmt:formatNumber value="${son1.curpr}"
+														pattern="#0.0000" /></td>
 												<c:set var="total" value="${total+son1.ucorq }"></c:set>
 												<c:set var="count" value="${ count+son1.ucorq*son1.curpr}"></c:set>
 												<td><fmt:formatNumber value="${son1.ucorq*son1.curpr}"
-														pattern="#0.0000" />
+														pattern="#0.00" />
 												</td>
 
 											</tr>
@@ -280,7 +284,7 @@
 												<c:when test="${language == 0}">生产数量:</c:when>
 												<c:when test="${language != 0}">Quantity:</c:when>
 											</c:choose> <fmt:formatNumber value="${son1.son2.orqty+son1.son2.qtdev}"
-												pattern="#0.0000" />,&nbsp; <c:choose>
+												pattern="#0.0" />,&nbsp; <c:choose>
 												<c:when test="${language == 0}">单位:</c:when>
 												<c:when test="${language != 0}">UOM:</c:when>
 											</c:choose> <c:out value="${son1.son2.umstt9}" /></td>
@@ -331,7 +335,7 @@
 											<td><c:out value="${son22.citem}" /></td>
 											<td><c:out value="${son22.cdesc}" /></td>
 											<td><fmt:formatNumber value="${son22.qtreq}"
-													pattern="#0.0000" /></td>
+													pattern="#0.0" /></td>
 											<td><c:out value="${son22.unmsr}" /></td>
 											<td><c:out value="${son22.whsub2}" /></td>
 										</tr>
@@ -346,24 +350,24 @@
 										<td><c:choose>
 												<c:when test="${language == 0}">数量合计:</c:when>
 												<c:when test="${language != 0}">Quantity:</c:when>
-											</c:choose> <fmt:formatNumber value="${total }" pattern="#0.0000" />
+											</c:choose> <fmt:formatNumber value="${total }" pattern="#0.0" />
 										</td>
 										<td><c:choose>
 												<c:when test="${language == 0}">采购金额:</c:when>
 												<c:when test="${language != 0}">Purchase amount:</c:when>
-											</c:choose> <fmt:formatNumber value="${count }" pattern="#0.0000" />
+											</c:choose> <fmt:formatNumber value="${count }" pattern="#0.00" />
 										</td>
 										<td><c:choose>
 												<c:when test="${language == 0}">税额:</c:when>
 												<c:when test="${language != 0}">Tax amount:</c:when>
 											</c:choose> <fmt:formatNumber value="${count*resultMap.txsuf*0.01 }"
-												pattern="#0.0000" /></td>
+												pattern="#0.00" /></td>
 										<td><c:choose>
 												<c:when test="${language == 0}">税价合计:</c:when>
 												<c:when test="${language != 0}">Amount total:</c:when>
 											</c:choose> <fmt:formatNumber
 												value="${count+count*resultMap.txsuf*0.01 }"
-												pattern="#0.0000" />
+												pattern="#0.00" />
 										</td>
 									</tr>
 								</table></td>

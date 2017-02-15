@@ -94,6 +94,7 @@ public class getProductionLabelServlet extends HttpServlet {
 		}
 		request.setAttribute("totalweight", totalweight);
 		request.getRequestDispatcher("supplier/product_label.jsp").forward(request, response);
+		
 	}
 
 }
