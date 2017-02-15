@@ -6,10 +6,7 @@
 <%@ page import="java.math.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%
 
-	
- %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Ampheno SRM</title>
@@ -391,7 +388,7 @@ try{
 	
 	
 	//----------查询总条数
-	 sql = "select count(*) as c from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT where VNDRJI='"+userCode+"' and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
+	 sql = "select count(*) as c from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT where VNDRJI='"+userCode+"' and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35' or SCHRCP.RCPSJI='05') ";
 	 	if(!"*ALL".equals(userHouse)){
  		sql=sql+" AND SCHRCP.WHIDJI='"+userHouse+"'";
  	}else{
@@ -438,7 +435,7 @@ try{
 			  }
 	
 	
- 	sql="select * from (select SCHRCP.*,POMAST.ACTDT,ITMSIT.BLCFT9,rownumber() over() as rn from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT,"+envIdXA+".POMAST as POMAST where VNDRJI='"+userCode+"' and SCHRCP.ORDRJI=POMAST.ORDNO and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
+ 	sql="select * from (select SCHRCP.*,POMAST.ACTDT,ITMSIT.BLCFT9,rownumber() over() as rn from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT,"+envIdXA+".POMAST as POMAST where VNDRJI='"+userCode+"' and SCHRCP.ORDRJI=POMAST.ORDNO and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35' or SCHRCP.RCPSJI='05') ";
  	//String sql="select SCHRCP.*,ITMSIT.BLCFT9 from "+envIdXA+".SCHRCP as SCHRCP,"+envIdXA+".ITMSIT as ITMSIT where VNDRJI='"+userCode+"' and SCHRCP.ITNOJI=ITMSIT.ITNOT9 and ITMSIT.STIDT9='"+stid+"' and (SCHRCP.RCPSJI='10' or SCHRCP.RCPSJI='35') ";
 // SELECT * FROM (Select 字段1,字段2,字段3,rownumber() over(ORDER BY 排序用的列名 ASC) AS rn from 表名) AS a1 WHERE a1.rn BETWEEN 10 AND 20 
  	//String sql="select SCHRCP.* from "+envIdXA+".SCHRCP as SCHRCP where VNDRJI='"+userCode+"' ";
