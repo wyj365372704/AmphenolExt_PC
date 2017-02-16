@@ -1,4 +1,5 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+﻿<%@page import="java.net.URLEncoder"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ page import="com.amphenol.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
@@ -15,10 +16,8 @@
 </head>
 <script type="text/javascript">
 	var pagenum="1";
+	
 	function submit2(){
-		// 
-		
-		
 		document.getElementsByName("buyIn")[0].submit();
 	}
 	function first(){
@@ -28,7 +27,6 @@
 			document.getElementsByName("pageno")[0].value="1";
 			document.getElementsByName("buyIn")[0].submit();
 		}
-		
 	}
 	function pre(){
 		XA
@@ -243,8 +241,8 @@
 		document.getElementsByName("buyIn")[0].submit();
 	}
 	function goshd(flag){
-	   window.location.href="buyInFpModify.jsp"+encodeURI(flag);
-	   //buyInFpModify.jsp
+	/*    window.location.href="buyInFpModify.jsp"+encod(flag); */
+	   window.location.href="buyInFpModify.jsp"+flag;
 	}
 	
 		function gopage(fwarehouse,fordrji,finfoji,fds40ji){
@@ -476,7 +474,7 @@ try{
 <tr>
 	<td><input type="button" value="添加送货单" onclick="goshd('?item1=<%=rs.getString("ORDRJI") + "-"
 								+ rs.getInt("PISQJI") + "-"
-								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=rs.getString("DS40JI")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
+								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=URLEncoder.encode(rs.getString("DS40JI"), "UTF-8")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
 	<td><%=rs.getString("WHIDJI") %></td>
 	<td><%=rs.getString("ORDRJI")+"-"+rs.getInt("PISQJI")+"-"+rs.getInt("BKSQJI") %></td>
 	<td><%=rs.getString("ITNOJI") %></td>

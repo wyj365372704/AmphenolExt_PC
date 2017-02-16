@@ -1,3 +1,6 @@
+<%@page import="java.net.URLDecoder"%>
+<%@page import="java.net.URLEncoder"%>
+<%@page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="javax.xml.bind.annotation.XmlElementDecl.GLOBAL"%>
@@ -32,6 +35,19 @@
 			"ISO8859-1"), "utf-8");
 	String SCTKJI = new String(request.getParameter("SCTKJI").getBytes(
 			"ISO8859-1"), "utf-8");
+			
+	item1 = URLDecoder.decode(item1,"UTF-8");
+	item2 = URLDecoder.decode(item2,"UTF-8");
+	item3 = URLDecoder.decode(item3,"UTF-8");
+	item4 = URLDecoder.decode(item4,"UTF-8");
+	item5 = URLDecoder.decode(item5,"UTF-8");
+	item6 = URLDecoder.decode(item6,"UTF-8");
+	item9 = URLDecoder.decode(item9,"UTF-8");
+	BLCFT9 = URLDecoder.decode(BLCFT9,"UTF-8");
+	PISQJI = URLDecoder.decode(PISQJI,"UTF-8");
+	ORDRJI = URLDecoder.decode(ORDRJI,"UTF-8");
+	BKSQJI = URLDecoder.decode(BKSQJI,"UTF-8");
+	SCTKJI = URLDecoder.decode(SCTKJI,"UTF-8");
 %>
 <%
 	String userName = (String) session.getAttribute("userName");
