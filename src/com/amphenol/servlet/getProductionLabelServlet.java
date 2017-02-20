@@ -11,20 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.amphenol.util.QRcoderUtil;
 
 public class getProductionLabelServlet extends HttpServlet {
-	private String fordrji = "";//物料
-	private String fds40ji = "";//描述
-	private String fldesc = "";//规格
-	private String fcout = "";//每箱数量
-	private String fumstt9 = "";//库存单位
-	private String fblcft9 = "";//批号
-	private String fweight = "";//净重
-	private String outer_weight = "";//包材重
-	private String fdate = "";//日期
-	private String fproducter = "";//厂商
-	private String outer_weight_unit = "kg";//包材重单位
-	private String fweight_unit = "g";//单重单位
-	
-	
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -36,6 +22,20 @@ public class getProductionLabelServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 	
+		String fordrji = "";//物料
+		String fds40ji = "";//描述
+		String fldesc = "";//规格
+		String fcout = "";//每箱数量
+		String fumstt9 = "";//库存单位
+		String fblcft9 = "";//批号
+		String fweight = "";//净重
+		String outer_weight = "";//包材重
+		String fdate = "";//日期
+		String fproducter = "";//厂商
+		String outer_weight_unit = "kg";//包材重单位
+		String fweight_unit = "g";//单重单位
+		
+		
 		fordrji = 	new String(request.getParameter("fordrji").getBytes(
 				"ISO8859-1"), "utf-8");
 		fds40ji = 	new String(request.getParameter("fds40ji").getBytes(

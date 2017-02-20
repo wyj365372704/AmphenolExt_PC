@@ -15,11 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.amphenol.util.ConstantUtils;
 
 public class modifyInvoiceServlet extends HttpServlet {
-	private String SHPNO = "" ;
-	private String envId = "";
-	private String LGWNO = "" ;
-	
-	Connection conn = null ;
+
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,6 +28,12 @@ public class modifyInvoiceServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		
+		String SHPNO = "" ;
+		String envId = "";
+		String LGWNO = "" ;
+		
+		Connection conn = null ;
 		
 		LGWNO = request.getParameter("LGWNO");
 		SHPNO = request.getParameter("SHPNO");

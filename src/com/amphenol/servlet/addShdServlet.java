@@ -22,30 +22,7 @@ import com.amphenol.util.ConstantUtils;
 import com.sun.corba.se.spi.orbutil.fsm.State;
 
 public class addShdServlet extends HttpServlet {
-	String userName = "";
-	String envId = "";
-	String envIdXA = "";
-	String userCode = "";
-	String userHouse = "";
-	String stid = "";
-	String PISQJI = "";
-	String ORDRJI = "" ;
-	String BKSQJI = "";
-	String BLCF = "" ;
-	String SCTKJI = "";
-	String SHPLN = "";
-	String SHPNO = "";
-	String ITNBR = "";
-	String PURUM = "";
-	String B2CQCD = "";
-	float UMCVJI = 1;//转换系数
-
-	float WEGHT = 0f;
-	float wjl = 0f;//未交量
-	float SHQTY = 0f;//本次送货量
-	private String[] batchNames;
-	private String[] batchNums;
-	private String BLKSQ;
+	
 	/**
 	 * The doGet method of the servlet. <br>
 	 *
@@ -75,7 +52,30 @@ public class addShdServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean insertResult = false ;
+		String userName = "";
+		String envId = "";
+		String envIdXA = "";
+		String userCode = "";
+		String userHouse = "";
+		String stid = "";
+		String PISQJI = "";
+		String ORDRJI = "" ;
+		String BKSQJI = "";
+		String BLCF = "" ;
+		String SCTKJI = "";
+		String SHPLN = "";
+		String SHPNO = "";
+		String ITNBR = "";
+		String PURUM = "";
+		String B2CQCD = "";
+		float UMCVJI = 1;//转换系数
 
+		float WEGHT = 0f;
+		float wjl = 0f;//未交量
+		float SHQTY = 0f;//本次送货量
+		String[] batchNames;
+		String[] batchNums;
+		String BLKSQ;
 
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -119,23 +119,37 @@ public class addShdServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		SHPNO = getHeaderShpno(conn);
+		/*Connection conn,String envId,String [] batchNames,String[] batchNums,
+		String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+		String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY*/
+		SHPNO = getHeaderShpno(conn,envId,batchNames,batchNums,
+				userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+				BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
 		if(SHPNO.equals("")){
 			//不存在表头,插入表头
-			boolean result = insertHead(conn);
+			SHPNO = insertHead(conn,envId,batchNames,batchNums,
+					userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+					BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
 			System.out.println("the insert shpno is "+SHPNO);
-			if(result){
+			if(SHPNO!=null && !SHPNO.isEmpty()){
 				//表头插入成功，插入表体
-				insertResult = insertBody(conn);
+				SHPLN = insertBody(conn,envId,batchNames,batchNums,
+						userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+						BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
+				insertResult = true;
 			}
 		}else{
 			//存在表头，插入表体
-			insertResult = insertBody(conn);
+			SHPLN = insertBody(conn,envId,batchNames,batchNums,
+					userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+					BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
+			insertResult = true;
 		}
-		if(insertResult){
+		if(SHPLN!=null&&!SHPLN.isEmpty()){
 			if(batchNames!=null&&batchNames.length>0)
-				insertResult = insertBatch(conn);
+				insertResult = insertBatch(conn,envId,batchNames,batchNums,
+						userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+						BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
 		}
 
 		if(insertResult){
@@ -166,7 +180,9 @@ public class addShdServlet extends HttpServlet {
 	}
 
 
-	private boolean  insertBatch(Connection conn) {
+	private boolean  insertBatch(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		// TODO Auto-generated method stub
 		boolean result = false ;
 		Statement statement = null ;
@@ -203,10 +219,14 @@ public class addShdServlet extends HttpServlet {
 
 	}
 
-	private boolean insertBody(Connection conn) {
+	private String insertBody(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		boolean result = false ;
 		Statement stmt = null;
-		SHPLN = getShpln(conn);
+		SHPLN = getShpln(conn,envId,batchNames,batchNums,
+				userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+				BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
 //		BLKSQ = getBLKSQ(conn) ;
 		try {
 			if (conn != null) {
@@ -219,6 +239,7 @@ public class addShdServlet extends HttpServlet {
 				result  = i == 1?true:false;
 			}
 		}catch (Exception e) {
+			SHPLN = "";
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -234,10 +255,12 @@ public class addShdServlet extends HttpServlet {
 			}
 		}
 
-		return result;
+		return result?SHPLN:"";
 	}
 
-	private String getBLKSQ(Connection conn) {
+	private String getBLKSQ(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		// TODO Auto-generated method stub
 		int result = 0;
 		boolean temp = false ;
@@ -261,8 +284,12 @@ public class addShdServlet extends HttpServlet {
 		System.out.println("!!!---finally the result is  "+result);
 		return result+"";
 	}
+	
+	
 
-	private String getShpln(Connection conn) {
+	private String getShpln(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		// TODO Auto-generated method stub
 		int result = 0;
 		try {
@@ -279,13 +306,17 @@ public class addShdServlet extends HttpServlet {
 		return ++result+"";
 	}
 
-	private boolean insertHead(Connection conn) {
+	private String insertHead(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
 		Statement stmt = null;
 		boolean result= false;
 		try {
 			userCode=userCode.trim();
-			SHPNO = userCode+"-"+dateFormat.format(new Date())+"-"+getSNO(conn);
+			SHPNO = userCode+"-"+dateFormat.format(new Date())+"-"+getSNO(conn,envId,batchNames,batchNums,
+					userCode,userHouse,ORDRJI,SHPNO,SHPLN,PURUM,PISQJI,BKSQJI,ITNBR,
+					BLCF,SCTKJI,B2CQCD,WEGHT,wjl,SHQTY);
 
 			if (conn != null) {
 				stmt = conn.createStatement();
@@ -313,14 +344,16 @@ public class addShdServlet extends HttpServlet {
 			}
 		}
 
-		return result;
+		return result?SHPNO:"";
 	}
 
 	/**
 	 * 获取当前用户的送货单表头
 	 * @return
 	 */
-	private String getHeaderShpno(Connection conn) {
+	private String getHeaderShpno(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = "";
@@ -375,7 +408,9 @@ public class addShdServlet extends HttpServlet {
 	 * 返回三位数的序列号
 	 * @return
 	 */
-	private String getSNO(Connection conn) {
+	private String getSNO(Connection conn,String envId,String [] batchNames,String[] batchNums,
+			String userCode,String userHouse,String ORDRJI,String SHPNO,String SHPLN,String PURUM,String PISQJI,String BKSQJI,String ITNBR,
+			String BLCF,String SCTKJI,String B2CQCD,float WEGHT,float wjl,float SHQTY) {
 		int num = 1;
 		Statement statement = null;
 		ResultSet executeQuery = null ;

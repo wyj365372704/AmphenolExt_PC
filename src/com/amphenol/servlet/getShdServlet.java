@@ -26,20 +26,7 @@ import com.sun.corba.se.spi.orbutil.fsm.State;
 import com.sun.org.apache.bcel.internal.generic.LXOR;
 
 public class getShdServlet extends HttpServlet {
-	PrintWriter out = null ;
-	ShEntity shEntity  = new ShEntity();
-	String userName = "";
-	String envId = "";
-	String envIdXA = "";
-	String userCode = "";
-	String userHouse = "";
-	String stid = "";
-	String shpno = "" ;
-	String stat = "";
 
-	Connection connXA = null ;
-	Connection conn = null ;
-	
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -51,6 +38,24 @@ public class getShdServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html;charset=UTF-8");
+		
+		
+		PrintWriter out = null ;
+		ShEntity shEntity  = new ShEntity();
+		String userName = "";
+		String envId = "";
+		String envIdXA = "";
+		String userCode = "";
+		String userHouse = "";
+		String stid = "";
+		String shpno = "" ;
+		String stat = "";
+
+		Connection connXA = null ;
+		Connection conn = null ;
+		
+		
+		
 		out = response.getWriter();
 
 		userName = (String) request.getSession().getAttribute("userName");
@@ -94,13 +99,24 @@ public class getShdServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getVENNAM(connXA);
-		getSHPMST(connXA);
+		/*Connection conn,Connection connXA,ShEntity shEntity,String userName,
+		String envId,String envIdXA,String userCode,String userHouse,String stid,
+		String shpno,String stat,PrintWriter out*/
+		getVENNAM(conn,connXA,shEntity,userName,
+				envId,envIdXA,userCode,userHouse,stid,
+				shpno,stat,out);
+		getSHPMST(conn,connXA,shEntity,userName,
+				envId,envIdXA,userCode,userHouse,stid,
+				shpno,stat,out);
 
-		getZSHPITM(conn);
+		getZSHPITM(conn,connXA,shEntity,userName,
+				envId,envIdXA,userCode,userHouse,stid,
+				shpno,stat,out);
 		
 		if(stat.equals("10"))
-			changeOSTAT(conn);
+			changeOSTAT(conn,connXA,shEntity,userName,
+					envId,envIdXA,userCode,userHouse,stid,
+					shpno,stat,out);
 
 		try {
 			connXA.close();
@@ -124,7 +140,11 @@ public class getShdServlet extends HttpServlet {
 		out.close();
 	}
 
-	private void changeOSTAT(Connection conn2) {
+	
+	
+	private void changeOSTAT(Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 		// TODO Auto-generated method stub
 
 		Statement statement = null;
@@ -149,7 +169,9 @@ public class getShdServlet extends HttpServlet {
 		}
 	}
 
-	private String getDS40JI(Connection connXA,String SCTKJI) {
+	private String getDS40JI(String SCTKJI,Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 		String result = "" ;
 
 		Statement statement = null;
@@ -183,7 +205,9 @@ public class getShdServlet extends HttpServlet {
 
 	}
 
-	private void getZSHPITM(Connection conn) {
+	private void getZSHPITM(Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 
 		List<ShdItem> sdhItems = new ArrayList<ShdItem>();
 		shEntity.setSdhItems(sdhItems);
@@ -207,8 +231,13 @@ public class getShdServlet extends HttpServlet {
 					shdItem.setDz(executeQuery.getFloat("TWHT")/executeQuery.getFloat("SHQTY"));
 					shdItem.setZl(executeQuery.getFloat("TWHT"));
 					shdItem.setDw(executeQuery.getString("WHTUM").trim());
-					shdItem.setMs(getDS40JI(connXA,executeQuery.getString("SCTKJI")).trim());
-					shdItem.setPcItem(getPc(conn, executeQuery.getString("SHPNO").trim(), executeQuery.getInt("SHPLN")));
+					shdItem.setMs(getDS40JI(executeQuery.getString("SCTKJI").trim(),conn,connXA,shEntity,userName,
+							envId,envIdXA,userCode,userHouse,stid,
+							shpno,stat,out));
+					shdItem.setPcItem(getPc(executeQuery.getString("SHPNO").trim(), executeQuery.getInt("SHPLN"),
+							conn,connXA,shEntity,userName,
+							envId,envIdXA,userCode,userHouse,stid,
+							shpno,stat,out));
 					sdhItems.add(shdItem);
 				}
 				shEntity.setSdhItems(sdhItems);
@@ -230,7 +259,9 @@ public class getShdServlet extends HttpServlet {
 
 	}
 
-	private ArrayList<ShdPcItem> getPc(Connection conn,String SHPNO,int SHPLN) {
+	private ArrayList<ShdPcItem> getPc(String SHPNO,int SHPLN,Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 
 		Statement statement = null;
 		ResultSet executeQuery = null ;
@@ -268,7 +299,9 @@ public class getShdServlet extends HttpServlet {
 
 	}
 
-	private void getSHPMST(Connection connXA) {
+	private void getSHPMST(Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 
 		Statement statement = null;
 		ResultSet executeQuery = null ;
@@ -306,7 +339,9 @@ public class getShdServlet extends HttpServlet {
 
 	}
 
-	private void getVENNAM(Connection connXA) {
+	private void getVENNAM(Connection conn,Connection connXA,ShEntity shEntity,String userName,
+			String envId,String envIdXA,String userCode,String userHouse,String stid,
+			String shpno,String stat,PrintWriter out) {
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {

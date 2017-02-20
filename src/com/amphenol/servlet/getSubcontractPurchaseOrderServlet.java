@@ -21,32 +21,34 @@ import javax.servlet.http.HttpServletResponse;
 import com.amphenol.util.ConstantUtils;
 
 public class getSubcontractPurchaseOrderServlet extends HttpServlet {
-	String userName = "";
-	String envId = "";
-	String envIdXA = "";
-	String userCode = "";
-	String userHouse = "";
-	String stid = "";
-
-	private int language = 0;
-
-	private String ordno;
-
-	private String chk01;
-
-	private String chk02;
-
-	private String chk03;
-
-	Map resultMap ;
-
-	Connection connXA = null ;
-	Connection conn = null ;
-
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
+		String userName = "";
+		String envId = "";
+		String envIdXA = "";
+		String userCode = "";
+		String userHouse = "";
+		String stid = "";
+
+		int language = 0;
+
+		String ordno;
+
+		String chk01;
+
+		String chk02;
+
+		String chk03;
+
+		Map resultMap ;
+
+		Connection connXA = null ;
+		Connection conn = null ;
+
+		
 		userName = (String) request.getSession().getAttribute("userName");
 		userHouse = (String) request.getSession().getAttribute("userHouse");
 		envId = (String) request.getSession().getAttribute("envId");
@@ -91,8 +93,15 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 
 		////
-		getPOMAST();
-		getZBMSCTL();
+		/*Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+		String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+		String chk03,int language*/
+		getPOMAST(conn,connXA,resultMap,userName,userCode,
+				userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+				chk03,language);
+		getZBMSCTL(conn,connXA,resultMap,userName,userCode,
+				userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+				chk03,language);
 
 		try {
 			connXA.close();
@@ -116,7 +125,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void getZBMSCTL(){
+	private void getZBMSCTL(Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -145,7 +156,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 	}
 
 
-	private void getPOMAST() {
+	private void getPOMAST(Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language) {
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -164,11 +177,17 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 					resultMap.put("s135", executeQuery.getString("S135"));
 					resultMap.put("s235", executeQuery.getString("S235"));
 					resultMap.put("buyno", executeQuery.getString("BUYNO"));
-					resultMap.put("buynm", getBuynm(executeQuery.getString("BUYNO")));
+					resultMap.put("buynm", getBuynm(executeQuery.getString("BUYNO"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language));
 					resultMap.put("curid", executeQuery.getString("CURID"));
 
 					System.out.println("a01");
-					getSHPMST(executeQuery.getString("BILID"));
+					getSHPMST(executeQuery.getString("BILID"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 
 					System.out.println("a02");
 
@@ -176,13 +195,19 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 
 					System.out.println("a03");
 
-					getVENNAM(executeQuery.getString("VNDNR"));
+					getVENNAM(executeQuery.getString("VNDNR"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 
 					System.out.println("a04");
 					resultMap.put("trmds", executeQuery.getString("TRMDS"));
 					resultMap.put("viads", executeQuery.getString("VIADS"));
 
-					getPOITEM(executeQuery.getString("ORDNO"));
+					getPOITEM(executeQuery.getString("ORDNO"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 					System.out.println("item's size is "+((List)resultMap.get("item")).size());
 					System.out.println("a05");
 				}
@@ -208,7 +233,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		return result.substring(0, 4)+"/"+result.substring(4,6)+"/"+result.substring(6, 8);
 	}
 
-	private String getBuynm(String buyno){
+	private String getBuynm(String buyno,Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		String result = "";
 		if(buyno ==null || buyno.trim().isEmpty())
 			return result;
@@ -240,7 +267,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		return result;
 	}
 
-	private void getSHPMST(String bilid){
+	private void getSHPMST(String bilid,Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		if(bilid ==null || bilid.trim().isEmpty())
 			return ;
 
@@ -272,7 +301,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getVENNAM(String vndnr){
+	private void getVENNAM(String vndnr,Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		if(vndnr ==null || vndnr.trim().isEmpty())
 			return ;
 
@@ -309,7 +340,9 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getPOITEM(String poitem){
+	private void getPOITEM(String poitem,Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		if(poitem ==null || poitem.trim().isEmpty())
 			return ;
 
@@ -338,7 +371,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 						Map son2=  new HashMap();
 						son1.put("son2", son2);
 
-						getMOPORF(son2,ordno,executeQuery.getString("POISQ"),executeQuery.getString("LINSQ"));
+						getMOPORF(son2,ordno,executeQuery.getString("POISQ"),executeQuery.getString("LINSQ"),
+								conn,connXA,resultMap,userName,userCode,
+								userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+								chk03,language);
 					}
 				}
 			}
@@ -356,7 +392,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getMOPORF(Map map,String ponr,String posq,String lseq){
+	private void getMOPORF(Map map,String ponr,String posq,String lseq,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -368,13 +407,25 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 					map.put("monr", executeQuery.getString("MONR"));
 					map.put("opsq", executeQuery.getString("OPSQ"));
 					System.out.println("b01");
-					getMOMAST(map,executeQuery.getString("MONR"));
+					getMOMAST(map,executeQuery.getString("MONR"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 					System.out.println("b02");
-					getMOROUT(map,executeQuery.getString("MONR"),executeQuery.getString("OPSQ"));
+					getMOROUT(map,executeQuery.getString("MONR"),executeQuery.getString("OPSQ"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 					System.out.println("b03");
-					getITMSIT(map,(String) (map.containsKey("fitem")?map.get("fitem"):""));
+					getITMSIT(map,(String) (map.containsKey("fitem")?map.get("fitem"):""),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 					System.out.println("b04");
-					getMODATA(map,executeQuery.getString("MONR"));
+					getMODATA(map,executeQuery.getString("MONR"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 					System.out.println("b05");
 					/*MOPORFVO moporf2 = new  MOPORFVO();
 					moporf2.setPonr(poitem.getOrdno());
@@ -469,12 +520,15 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 	}
 
 
-	private void getMOMAST(Map map,String ordno){
+	private void getMOMAST(Map map,String ordnoNew,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
 			statement = connXA.createStatement();
-			String sql = "SELECT * FROM "+envIdXA.trim()+".MOMAST WHERE ORDNO = '"+ordno+"'";
+			String sql = "SELECT * FROM "+envIdXA.trim()+".MOMAST WHERE ORDNO = '"+ordnoNew+"'";
 			executeQuery = statement.executeQuery(sql);
 			if(executeQuery!=null){
 				if(executeQuery.next()){
@@ -499,12 +553,15 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 	}
 
 
-	private void getMOROUT(Map map,String ordno,String opseq){
+	private void getMOROUT(Map map,String ordnoNew,String opseq,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
 			statement = connXA.createStatement();
-			String sql = "SELECT * FROM "+envIdXA.trim()+".MOROUT WHERE ORDNO = '"+ordno+"' AND OPSEQ  = '"+opseq+"'";
+			String sql = "SELECT * FROM "+envIdXA.trim()+".MOROUT WHERE ORDNO = '"+ordnoNew+"' AND OPSEQ  = '"+opseq+"'";
 			executeQuery = statement.executeQuery(sql);
 			if(executeQuery!=null){
 				if(executeQuery.next()){
@@ -525,7 +582,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getITMSIT(Map map,String itnot9){
+	private void getITMSIT(Map map,String itnot9,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -551,7 +611,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getMODATA(Map map,String monr){
+	private void getMODATA(Map map,String monr,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -570,7 +633,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 					son22.put("qtreq", executeQuery.getString("QTREQ"));
 					son22.put("unmsr", executeQuery.getString("UNMSR"));
 
-					getZITEMBX(son22,executeQuery.getString("CITWH"),executeQuery.getString("CITEM"));
+					getZITEMBX(son22,executeQuery.getString("CITWH"),executeQuery.getString("CITEM"),
+							conn,connXA,resultMap,userName,userCode,
+							userHouse,envId,envIdXA,stid,ordno,chk01,chk02,
+							chk03,language);
 				}
 			}
 		}catch (Exception e) {
@@ -587,7 +653,10 @@ public class getSubcontractPurchaseOrderServlet extends HttpServlet {
 		}
 	}
 
-	private void getZITEMBX(Map map,String house,String itnbr){
+	private void getZITEMBX(Map map,String house,String itnbr,
+			Connection conn,Connection connXA,Map resultMap,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String ordno,String chk01,String chk02,
+			String chk03,int language){
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {

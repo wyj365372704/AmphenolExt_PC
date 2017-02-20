@@ -25,36 +25,35 @@ import com.amphenol.util.ConstantUtils;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class SubcontractPurchaseServlet extends HttpServlet {
-	String userName = "";
-	String envId = "";
-	String envIdXA = "";
-	String userCode = "";
-	String userHouse = "";
-	String stid = "";
-
-	String buyno = "";
-	String ordno = "";
-	String startDate = "";
-	String endDate = "";
-
-	int pageCount ;
-	int itemCount;
-	int currentPage =1 ;
-	int pageSpace = 20;
-
-
-	List<Map> results;
-
-
-
-	Connection connXA = null ;
-	Connection conn = null ;
-
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		results =  new ArrayList<Map>();
 		response.setContentType("text/html;charset=UTF-8");
+		
+		String userName = "";
+		String envId = "";
+		String envIdXA = "";
+		String userCode = "";
+		String userHouse = "";
+		String stid = "";
+
+		String buyno = "";
+		String ordno = "";
+		String startDate = "";
+		String endDate = "";
+
+		int pageCount = 0 ;
+		int itemCount = 0;
+		int currentPage =1 ;
+		int pageSpace = 20;
+
+		List<Map> results;
+
+		Connection connXA = null ;
+		Connection conn = null ;
+		
+		results =  new ArrayList<Map>();
+
 
 		userName = (String) request.getSession().getAttribute("userName");
 		userHouse = (String) request.getSession().getAttribute("userHouse");
@@ -105,38 +104,8 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 		} catch (Exception e) {
 			currentPage = 1;
 		}
+	
 
-		getPOMAST();
-
-
-		try {
-			connXA.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("pageCount", pageCount);
-		request.setAttribute("pageSpace", pageSpace);
-		request.setAttribute("itemCount", itemCount);
-		request.setAttribute("buyno", buyno);
-		request.setAttribute("ordno", ordno);
-		request.setAttribute("startDate", startDate);
-		request.setAttribute("endDate", endDate);
-		request.setAttribute("results", results);
-		request.getRequestDispatcher("supplier/pomast_list.jsp").forward(request, response);
-	}
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
-
-
-	private void getPOMAST() {
 		Statement statement = null;
 		ResultSet executeQuery = null ;
 		try {
@@ -217,7 +186,10 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 					Map<String,String> item = new HashMap();
 					item.put("ordno", executeQuery.getString("ORDNO"));
 					item.put("house", executeQuery.getString("HOUSE"));
-					item.put("curid", getZbmsctlCurid(executeQuery.getString("CURID")));
+					item.put("curid", getZbmsctlCurid(executeQuery.getString("CURID"),
+							conn,connXA,results,userName,userCode,
+							userHouse,envId,envIdXA,stid,buyno,ordno,startDate,
+							endDate,pageCount,itemCount,currentPage,pageSpace));
 					item.put("buyno", executeQuery.getString("BUYNO"));
 					item.put("pstts", executeQuery.getString("PSTTS"));
 					item.put("actdt", getActdt(executeQuery.getString("ACTDT")));
@@ -236,9 +208,40 @@ public class SubcontractPurchaseServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+	
+
+
+		try {
+			connXA.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("pageSpace", pageSpace);
+		request.setAttribute("itemCount", itemCount);
+		request.setAttribute("buyno", buyno);
+		request.setAttribute("ordno", ordno);
+		request.setAttribute("startDate", startDate);
+		request.setAttribute("endDate", endDate);
+		request.setAttribute("results", results);
+		request.getRequestDispatcher("supplier/pomast_list.jsp").forward(request, response);
 	}
 
-	private String getZbmsctlCurid(String result) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+
+	private String getZbmsctlCurid(String result,
+			Connection conn,Connection connXA,List<Map> results,String userName,String userCode,
+			String userHouse,String envId,String envIdXA,String stid,String buyno,String ordno,String startDate,
+			String endDate,int pageCount,int itemCount,int currentPage,int pageSpace) {
 		if(!result.trim().isEmpty())
 			return result;
 		Statement statement = null;

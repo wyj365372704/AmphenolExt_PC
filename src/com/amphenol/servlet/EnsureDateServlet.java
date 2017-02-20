@@ -21,19 +21,7 @@ import com.amphenol.tools.HttpServer;
 import com.amphenol.util.ConstantUtils;
 
 public class EnsureDateServlet extends HttpServlet {
-	Connection conn = null ;
-	Statement statement = null;
-	ResultSet resultSet = null;
 
-	String envId = "";
-	String userCode = "";
-	String userHouse = "";
-
-	String PISQJI = "";
-	String ORDRJI = "";
-	String OLDDATE = "";
-	String BKSQJI = "";
-	String newDate = "";
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -43,6 +31,20 @@ public class EnsureDateServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Connection conn = null ;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		String envId = "";
+		String userCode = "";
+		String userHouse = "";
+
+		String PISQJI = "";
+		String ORDRJI = "";
+		String OLDDATE = "";
+		String BKSQJI = "";
+		String newDate = "";
+		
 		envId = (String) request.getSession().getAttribute("envId");
 		userHouse = (String) request.getSession().getAttribute("userHouse");
 		
