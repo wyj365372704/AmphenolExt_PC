@@ -319,6 +319,7 @@ window.location.href="logo.jsp";
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" class="list_table_s">
 			   <tr>
 			   <th>选择</th>
+			   <th>已添加送货单</th>
 				<th>工厂</th>
 				<th>采购单号 项次</th>
 				<th>物料</th>
@@ -328,6 +329,7 @@ window.location.href="logo.jsp";
 			<th>未交量(采购单位)</th>
 				<th>采购交期</th>
 				<th>是否批次控制</th>
+				
 				<!-- 
 				<th>审核人</th>
 			    -->
@@ -444,7 +446,27 @@ try{
 	   stmt = (Statement) conn.createStatement();
 	   stmt.execute(sql);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
 	   rs=(ResultSet) stmt.getResultSet();
+	   boolean pushed = false;
+	   
 	while(rs.next()){ //当前记录指针移动到下一条记录上
+	/////
+	
+	sql="Select count(1) as con from "+envId+".ZSHPITM where ORDNO = '"+rs.getString("ORDRJI")+"' AND POISQ = '"+rs.getInt("PISQJI")+"'";
+	System.out.println("wyj123:"+sql);
+ 	Statement stmt2 = (Statement) conn.createStatement();
+	stmt2.execute(sql);//执行select语句用executeQuery()方法，执行insert、update、delete语句用executeUpdate()方法。
+	ResultSet rs2=(ResultSet) stmt2.getResultSet();
+	if(rs2.next()){
+		pushed = rs2.getInt("con") >0 ;
+	}
+	
+ 	rs2.close();//后定义，先关闭
+	stmt2.close();
+	
+	
+	
+	
+	
 	int datei=rs.getInt("DKDTJI") +Integer.valueOf(19000000);
 		Calendar calendar=Calendar.getInstance();   
    	calendar.setTimeInMillis(System.currentTimeMillis());
@@ -456,6 +478,7 @@ try{
 %>
 <tr >
 	<td></td>
+	<td><font color="red"><%=(pushed?"是":"否") %></font></td>
 	<td><font color="red"><%=rs.getString("WHIDJI") %></font></td>
 	<td><font color="red"><%=rs.getString("ORDRJI")+"-"+rs.getInt("PISQJI")+"-"+rs.getInt("BKSQJI") %></font></td>
 	<td><font color="red"><%=rs.getString("ITNOJI") %></font></td>
@@ -467,6 +490,7 @@ try{
 	<td><font color="red"><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></font></td>
 	<td><font color="red"><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </font></td>
 	<td><font color="red"><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></font></td>
+	
 </tr>
 <%
 }else{
@@ -475,6 +499,7 @@ try{
 	<td><input type="button" value="添加送货单" onclick="goshd('?item1=<%=rs.getString("ORDRJI") + "-"
 								+ rs.getInt("PISQJI") + "-"
 								+ rs.getInt("BKSQJI")%>&item2=<%=rs.getString("ITNOJI")%>&item3=<%=URLEncoder.encode(rs.getString("DS40JI"), "UTF-8")%>&item4=<%=rs.getString("ORUMJI")%>&item5=<%=rs.getString("UMSTJI")%>&item6=<%=rs.getString("UMCVJI")%>&item9=<%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %>&BLCFT9=<%=rs.getString("BLCFT9")%>&PISQJI=<%=rs.getString("PISQJI")%>&ORDRJI=<%=rs.getString("ORDRJI")%>&BKSQJI=<%=rs.getString("BKSQJI")%>&SCTKJI=<%=rs.getString("SCTKJI")%>');"></td>
+	<td><%=(pushed?"是":"否") %></td>
 	<td><%=rs.getString("WHIDJI") %></td>
 	<td><%=rs.getString("ORDRJI")+"-"+rs.getInt("PISQJI")+"-"+rs.getInt("BKSQJI") %></td>
 	<td><%=rs.getString("ITNOJI") %></td>
@@ -484,6 +509,7 @@ try{
 	<td><%=decFormat.format(rs.getFloat("UMCVJI")==0?0f:(rs.getFloat("QTYOJI")/rs.getFloat("UMCVJI"))) %></td>
 	<td><%=(rs.getInt("DKDTJI") +Integer.valueOf(19000000))%> </td>
 	<td><%=("1".equals(rs.getString("BLCFT9"))?"是":"否") %></td>
+	
 </tr>
 <%
 }
